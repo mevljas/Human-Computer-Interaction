@@ -1,4 +1,4 @@
-set(gcf, 'Position',  [100, 100, 1500, 800])
+set(gcf, 'Position', [100, 100, 1500, 800])
 
 prompt = 'Prosimo vnesite številko želenega subjekta: ';
 subject = 1;  % Set the subject to the desired value
@@ -31,6 +31,12 @@ num_tabs = ceil(num_components / components_per_tab);
 y_min_all_tabs = Inf;
 y_max_all_tabs = -Inf;
 
+% Calculate the global y-axis limits across all components
+for i = 1:num_components
+    y_min_all_tabs = min(y_min_all_tabs, min(icasig(i, :)));
+    y_max_all_tabs = max(y_max_all_tabs, max(icasig(i, :)));
+end
+
 % Visualize individual independent components in separate tabs
 for t = 1:num_tabs
     % Create a new tab
@@ -44,25 +50,26 @@ for t = 1:num_tabs
         index = (t - 1) * components_per_tab + i;
         if index <= num_components
             subplot(components_per_tab, 1, i);
-            plot(tm, icasig(index, :));
-            title(['Independent Component ' num2str(index)]);
 
-            % Update y-axis limits across all tabs
-            y_min_all_tabs = min(y_min_all_tabs, min(icasig(index, :)));
-            y_max_all_tabs = max(y_max_all_tabs, max(icasig(index, :)));
+            % Increase the scaling factor for better visibility
+            scale_factor = 30; % Adjust as needed
+            scaled_component = icasig(index, :) * scale_factor;
+
+            % Plot the scaled independent component
+            plot(tm, scaled_component);
+            title(['Independent Component ' num2str(index)]);
+            
+            % Set the y-axis limits for the current subplot based on the original EEG signal
+            ylim([min(signals(:)), max(signals(:))]);
         end
     end
 end
 
-% Set the same y-axis limits for all subplots and tabs
-for t = 1:num_tabs
-    for i = 1:components_per_tab
-        tab = findobj(gcf, 'Type', 'uitab', 'Title', ['Tab ' num2str(t)]);
-        axes('Parent', tab);
-        subplot(components_per_tab, 1, i);
-        ylim([y_min_all_tabs, y_max_all_tabs]);
-    end
-end
+
+
+
+
+
 
 
 % Identify the independent component(s) corresponding to eye artifacts
