@@ -70,8 +70,8 @@ end
 % You may need to visualize the independent components and manually select the ones related to eye artifacts
 
 % Replace 'eye_artifact_components' with the indices of components related to eye artifacts
-%eye_artifact_components = [6, 24, 31, 33, 39, 56, 58]; % Based on my observation
-eye_artifact_components = [22, 24, 30, 38, 32, 36, 26, 28]; % Based on electrodes placement
+eye_artifact_components = [1, 34, 35, 36, 48, 52, 61]; % Based on my observation
+%eye_artifact_components = [22, 24, 30, 38, 32, 36, 26, 28]; % Based on electrodes placement
 
 
 % Set the identified components to zero in the independent components matrix
