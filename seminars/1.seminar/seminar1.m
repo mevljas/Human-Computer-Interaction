@@ -68,18 +68,20 @@ end
 
 % Identify the independent component(s) corresponding to eye artifacts
 % You may need to visualize the independent components and manually select the ones related to eye artifacts
-% For example, you can plot each independent component using plot(icasig(:, i))
-% Replace 'i' with the index of the independent component you want to visualize
 
-% Manually identify the components related to eye artifacts
 % Replace 'eye_artifact_components' with the indices of components related to eye artifacts
-eye_artifact_components = [13, 18, 22]; % Adjust this based on your observation
+%eye_artifact_components = [13, 18, 22]; % Based on my observation
+eye_artifact_components = [22, 24, 30, 38, 32, 36, 26, 28]; % Based on electrodes placement
+
 
 % Remove the selected components from the independent components
-%icasig(:, eye_artifact_components) = 0;
+icasig(:, eye_artifact_components) = 0;
 
 % Reconstruct the corrected EEG data
-%eeg_corrected = icasig * A * signals';
+eeg_corrected = A * icasig;
+
+% Transpose the result to have dimensions [num_samples, num_components]
+eeg_corrected = eeg_corrected';
 
 % Visualize the original and corrected signals
 figure;
@@ -90,9 +92,9 @@ plot(tm, signals);
 title('Original EEG Signals');
 
 % Plot corrected EEG signals
-%subplot(2, 1, 2);
-%plot(tm, eeg_corrected');
-%title('Corrected EEG Signals');
+subplot(2, 1, 2);
+plot(tm, eeg_corrected);
+title('Corrected EEG Signals');
 
 % Save the corrected signals if needed
 % save('path/to/save/corrected_signals.mat', 'eeg_corrected');
