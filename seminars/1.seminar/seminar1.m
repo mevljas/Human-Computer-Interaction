@@ -1,4 +1,4 @@
-prompt = 'Please select the subject index: ';
+prompt = 'Please select the subject: ';
 %subject = 1;  % Set the subject to the desired value
 subject = input(prompt);  % Set the subject to the desired value
 
@@ -8,7 +8,7 @@ end
 
 subjectStr = sprintf('%03d', subject);  % Ensure a leading zero
 
-prompt = 'Please select the experiment index: ';
+prompt = 'Please select the experiment: ';
 %experiment = 1;  % Set the experiment to the desired value
 experiment = input(prompt);  % Set the experiment to the desired value
 
@@ -19,7 +19,7 @@ end
 experimentStr = sprintf('%02d', experiment);  % Ensure a two leading zeros
 
 file = strcat('S', subjectStr, '\S', subjectStr, 'R', experimentStr, '.edf');
-disp('Opnening file: ');
+disp('Opening file: ');
 disp(file);
 [signals, fs, tm] = rdsamp(file, 1:64);
 
@@ -74,9 +74,13 @@ end
 % Identify the independent component(s) corresponding to eye artifacts
 % You may need to visualize the independent components and manually select the ones related to eye artifacts
 
-% Replace 'eye_artifact_components' with the indices of components related to eye artifacts
-eye_artifact_components = [10, 15, 22, 32]; % Based on my observation
+prompt = 'Please select the eye artifact components to be removed with an [] around them: ';
+%eye_artifact_components = [10, 15, 22, 32]; % Based on my observation
 %eye_artifact_components = [22, 24, 26, 28, 30, 32, 36, 38]; % Based on electrodes placement
+%eye_artifact_components = 1;  % Set the experiment to the desired value
+eye_artifact_components = input(prompt);  % Set the experiment to the desired value
+disp('Removing eye artifact components: ');
+disp(eye_artifact_components);
 
 
 % Set the identified components to zero in the independent components matrix
