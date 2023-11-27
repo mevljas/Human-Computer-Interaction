@@ -73,7 +73,7 @@ end
 
 % Manually identify the components related to eye artifacts
 % Replace 'eye_artifact_components' with the indices of components related to eye artifacts
-%eye_artifact_components = [1, 2]; % Adjust this based on your observation
+eye_artifact_components = [13, 18, 22]; % Adjust this based on your observation
 
 % Remove the selected components from the independent components
 %icasig(:, eye_artifact_components) = 0;
