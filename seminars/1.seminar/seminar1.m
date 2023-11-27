@@ -1,20 +1,25 @@
-%set(gcf, 'Position', [100, 100, 1500, 800])
-
-prompt = 'Prosimo vnesite številko želenega subjekta: ';
-subject = 1;  % Set the subject to the desired value
+prompt = 'Please select the subject index: ';
+%subject = 1;  % Set the subject to the desired value
+subject = input(prompt);  % Set the subject to the desired value
 
 if isempty(subject)
-    subject = 16;
+    subject = 1;
 end
 
-if (subject < 10)
-    subject = strcat('0', int2str(subject));
-else
-    subject = int2str(subject);
+subjectStr = sprintf('%03d', subject);  % Ensure a leading zero
+
+prompt = 'Please select the experiment index: ';
+%experiment = 1;  % Set the experiment to the desired value
+experiment = input(prompt);  % Set the experiment to the desired value
+
+if isempty(experiment)
+    experiment = 1;
 end
 
-file = strcat('S0', subject, '\S0', subject, 'R03.edf');
-disp('Odpiram datoteko: ');
+experimentStr = sprintf('%02d', experiment);  % Ensure a two leading zeros
+
+file = strcat('S', subjectStr, '\S', subjectStr, 'R', experimentStr, '.edf');
+disp('Opnening file: ');
 disp(file);
 [signals, fs, tm] = rdsamp(file, 1:64);
 
@@ -70,8 +75,8 @@ end
 % You may need to visualize the independent components and manually select the ones related to eye artifacts
 
 % Replace 'eye_artifact_components' with the indices of components related to eye artifacts
-eye_artifact_components = [1, 34, 35, 36, 48, 52, 61]; % Based on my observation
-%eye_artifact_components = [22, 24, 30, 38, 32, 36, 26, 28]; % Based on electrodes placement
+eye_artifact_components = [23, 63]; % Based on my observation
+%eye_artifact_components = [22, 24, 26, 28, 30, 32, 36, 38]; % Based on electrodes placement
 
 
 % Set the identified components to zero in the independent components matrix
@@ -100,6 +105,3 @@ title('Original EEG Signals');
 subplot(2, 1, 2);
 plot(tm, eeg_corrected);
 title('Corrected EEG Signals');
-
-% Save the corrected signals if needed
-% save('path/to/save/corrected_signals.mat', 'eeg_corrected');
