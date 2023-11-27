@@ -74,8 +74,8 @@ eye_artifact_components = [6, 24, 31, 33, 39, 56, 58]; % Based on my observation
 %eye_artifact_components = [22, 24, 30, 38, 32, 36, 26, 28]; % Based on electrodes placement
 
 
-% Remove the selected components from the independent components
-icasig(:, eye_artifact_components) = 0;
+% Set the identified components to zero
+icasig(eye_artifact_components, :) = 0;
 
 % Reconstruct the corrected EEG data
 eeg_corrected = A * icasig;
