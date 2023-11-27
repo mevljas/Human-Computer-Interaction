@@ -37,6 +37,10 @@ for i = 1:num_components
     y_max_all_tabs = max(y_max_all_tabs, max(icasig(i, :)));
 end
 
+% Determine the common y-axis limits for all components
+y_min_all_tabs = min(icasig(:));
+y_max_all_tabs = max(icasig(:));
+
 % Visualize individual independent components in separate tabs
 for t = 1:num_tabs
     % Create a new tab
@@ -51,25 +55,15 @@ for t = 1:num_tabs
         if index <= num_components
             subplot(components_per_tab, 1, i);
 
-            % Increase the scaling factor for better visibility
-            scale_factor = 30; % Adjust as needed
-            scaled_component = icasig(index, :) * scale_factor;
-
-            % Plot the scaled independent component
-            plot(tm, scaled_component);
+            % Plot the independent component without scaling
+            plot(tm, icasig(index, :));
             title(['Independent Component ' num2str(index)]);
             
-            % Set the y-axis limits for the current subplot based on the original EEG signal
-            ylim([min(signals(:)), max(signals(:))]);
+            % Set the y-axis limits for the current subplot based on the common range
+            ylim([y_min_all_tabs, y_max_all_tabs]);
         end
     end
 end
-
-
-
-
-
-
 
 
 % Identify the independent component(s) corresponding to eye artifacts
