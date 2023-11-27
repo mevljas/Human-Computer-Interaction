@@ -13,7 +13,7 @@ else
     subject = int2str(subject);
 end
 
-file = strcat('S0', subject, '\S0', subject, 'R01.edf');
+file = strcat('S0', subject, '\S0', subject, 'R03.edf');
 disp('Odpiram datoteko: ');
 disp(file);
 [signals, fs, tm] = rdsamp(file, 1:64);
