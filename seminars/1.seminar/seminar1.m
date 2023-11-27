@@ -1,4 +1,4 @@
-set(gcf, 'Position', [100, 100, 1500, 800])
+%set(gcf, 'Position', [100, 100, 1500, 800])
 
 prompt = 'Prosimo vnesite številko želenega subjekta: ';
 subject = 1;  % Set the subject to the desired value
@@ -22,7 +22,7 @@ disp(file);
 [icasig, A, W] = fastica(signals', 'approach', 'symm', 'g', 'tanh');
 
 % Define the number of components to display per tab
-components_per_tab = 5;  % Adjust this based on your preference
+components_per_tab = 1;  % Adjust this based on your preference
 
 num_components = size(icasig, 1);
 num_tabs = ceil(num_components / components_per_tab);
@@ -70,8 +70,8 @@ end
 % You may need to visualize the independent components and manually select the ones related to eye artifacts
 
 % Replace 'eye_artifact_components' with the indices of components related to eye artifacts
-%eye_artifact_components = [13, 18, 22]; % Based on my observation
-eye_artifact_components = [22, 24, 30, 38, 32, 36, 26, 28]; % Based on electrodes placement
+eye_artifact_components = [6, 24, 31, 33, 39, 56, 58]; % Based on my observation
+%eye_artifact_components = [22, 24, 30, 38, 32, 36, 26, 28]; % Based on electrodes placement
 
 
 % Remove the selected components from the independent components
