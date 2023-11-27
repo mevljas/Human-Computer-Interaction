@@ -75,7 +75,7 @@ end
 % You may need to visualize the independent components and manually select the ones related to eye artifacts
 
 % Replace 'eye_artifact_components' with the indices of components related to eye artifacts
-eye_artifact_components = [23, 63]; % Based on my observation
+eye_artifact_components = [10, 15, 22, 32]; % Based on my observation
 %eye_artifact_components = [22, 24, 26, 28, 30, 32, 36, 38]; % Based on electrodes placement
 
 
