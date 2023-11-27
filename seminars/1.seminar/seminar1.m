@@ -70,18 +70,23 @@ end
 % You may need to visualize the independent components and manually select the ones related to eye artifacts
 
 % Replace 'eye_artifact_components' with the indices of components related to eye artifacts
-eye_artifact_components = [6, 24, 31, 33, 39, 56, 58]; % Based on my observation
-%eye_artifact_components = [22, 24, 30, 38, 32, 36, 26, 28]; % Based on electrodes placement
+%eye_artifact_components = [6, 24, 31, 33, 39, 56, 58]; % Based on my observation
+eye_artifact_components = [22, 24, 30, 38, 32, 36, 26, 28]; % Based on electrodes placement
 
 
-% Set the identified components to zero
+% Set the identified components to zero in the independent components matrix
 icasig(eye_artifact_components, :) = 0;
 
+% Adjust the corresponding rows in the mixing matrix (A) to maintain consistency
+A_adjusted = A;
+A_adjusted(:, eye_artifact_components) = 0;
+
 % Reconstruct the corrected EEG data
-eeg_corrected = A * icasig;
+eeg_corrected = A_adjusted * icasig;
 
 % Transpose the result to have dimensions [num_samples, num_components]
 eeg_corrected = eeg_corrected';
+
 
 % Visualize the original and corrected signals
 figure;
