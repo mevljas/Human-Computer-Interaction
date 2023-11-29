@@ -1,22 +1,41 @@
+% Constants
+dlgtitle = 'Input';
+fieldsize = [1 45];
+
 prompt = 'Please select the subject: ';
 %subject = 1;  
-subject = input(prompt);  
+subject = inputdlg(prompt,dlgtitle,fieldsize);
 
-% fallback 
-if isempty(subject)
-    subject = 1;
+if isempty(subject),return,end % Bail out if they clicked Cancel.
+% Round to nearest integer in case they entered a floating point number.
+subject = round(str2double(cell2mat(subject)));
+% Check for a valid integer.
+if isnan(subject) || or(subject>109, subject<1)
+    % They didn't enter a number.  
+    % They clicked Cancel, or entered a character, symbols, or something else not allowed.
+    message = sprintf('Wrong input %d.', subject);
+    uiwait(warndlg(message));
+    return
 end
 
 subjectStr = sprintf('%03d', subject);  % Ensure a leading zero
 
 prompt = 'Please select the experiment: ';
 %experiment = 1;  
-experiment = input(prompt); 
+experiment = inputdlg(prompt,dlgtitle,fieldsize);
 
-% fallback
-if isempty(experiment)
-    experiment = 1;
+if isempty(experiment),return,end; % Bail out if they clicked Cancel.
+% Round to nearest integer in case they entered a floating point number.
+experiment = round(str2double(cell2mat(experiment)));
+% Check for a valid integer.
+if isnan(experiment) || or(experiment>14, experiment<1)
+    % They didn't enter a number.  
+    % They clicked Cancel, or entered a character, symbols, or something else not allowed.
+    message = sprintf('Wrong input %d.', experiment);
+    uiwait(warndlg(message));
+    return
 end
+
 
 experimentStr = sprintf('%02d', experiment);  % Ensure two leading zeros
 
@@ -76,10 +95,22 @@ end
 set(gcf, 'Position', get(0, 'Screensize'));
 
 % Identify the independent component(s) corresponding to eye artifacts
-prompt = 'Please select the eye artifact components to be removed with an [] around them: ';
+prompt = 'Please select the eye artifact components to be removed, seperated with spaces and put them inside of []: ';
 %eye_artifact_components = [10, 15, 22, 32]; % Based on my observation
 %eye_artifact_components = [22, 24, 26, 28, 30, 32, 36, 38]; % Based on electrodes placement
-eye_artifact_components = input(prompt);  
+eye_artifact_components = inputdlg(prompt,dlgtitle,fieldsize);
+
+if isempty(eye_artifact_components),return,end; % Bail out if they clicked Cancel.
+% Round to nearest integer in case they entered a floating point number.
+eye_artifact_components = round(str2double(cell2mat(eye_artifact_components)));
+% Check for a valid integer.
+if isnan(eye_artifact_components)
+    % They didn't enter a number.  
+    % They clicked Cancel, or entered a character, symbols, or something else not allowed.
+
+    message = sprintf('Using integer %d.', eye_artifact_components);
+    uiwait(warndlg(message));
+end
 
 disp('Removing eye artifact components: ');
 disp(eye_artifact_components);
