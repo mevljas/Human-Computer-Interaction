@@ -1,6 +1,7 @@
 % Constants
 dlgtitle = 'Input';
 fieldsize = [1 45];
+options.WindowStyle='normal';
 
 prompt = 'Please select the subject: ';
 %subject = 1;  
@@ -95,22 +96,14 @@ end
 set(gcf, 'Position', get(0, 'Screensize'));
 
 % Identify the independent component(s) corresponding to eye artifacts
-prompt = 'Please select the eye artifact components to be removed, seperated with spaces and put them inside of []: ';
+prompt = 'Please select the eye artifact components to be removed, seperated with spaces.';
+% TODO: test this again
 %eye_artifact_components = [10, 15, 22, 32]; % Based on my observation
 %eye_artifact_components = [22, 24, 26, 28, 30, 32, 36, 38]; % Based on electrodes placement
-eye_artifact_components = inputdlg(prompt,dlgtitle,fieldsize);
+eye_artifact_components = inputdlg(prompt,dlgtitle,fieldsize,{''},options);
 
 if isempty(eye_artifact_components),return,end; % Bail out if they clicked Cancel.
-% Round to nearest integer in case they entered a floating point number.
-eye_artifact_components = round(str2double(cell2mat(eye_artifact_components)));
-% Check for a valid integer.
-if isnan(eye_artifact_components)
-    % They didn't enter a number.  
-    % They clicked Cancel, or entered a character, symbols, or something else not allowed.
-
-    message = sprintf('Using integer %d.', eye_artifact_components);
-    uiwait(warndlg(message));
-end
+eye_artifact_components = str2num(eye_artifact_components{:});
 
 disp('Removing eye artifact components: ');
 disp(eye_artifact_components);
