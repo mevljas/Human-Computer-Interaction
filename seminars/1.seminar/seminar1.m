@@ -97,9 +97,6 @@ set(gcf, 'Position', get(0, 'Screensize'));
 
 % Identify the independent component(s) corresponding to eye artifacts
 prompt = 'Please select the eye artifact components to be removed, seperated with spaces.';
-% TODO: test this again
-%eye_artifact_components = [10, 15, 22, 32]; % Based on my observation
-%eye_artifact_components = [22, 24, 26, 28, 30, 32, 36, 38]; % Based on electrodes placement
 eye_artifact_components = inputdlg(prompt,dlgtitle,fieldsize,{''},options);
 
 if isempty(eye_artifact_components),return,end; % Bail out if they clicked Cancel.
