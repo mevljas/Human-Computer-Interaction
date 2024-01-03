@@ -16,7 +16,7 @@ class _FormPageState extends State<FormPage> {
       home: Scaffold(
         appBar: AppBar(
           title: const Text(
-            "Stepper Widget ",
+            "Avtek",
           ),
           centerTitle: true,
         ),
@@ -49,14 +49,25 @@ class _FormPageState extends State<FormPage> {
     );
   }
 
+  StepState getStepState(int step) {
+    if (currentStep > step) {
+      return StepState.complete;
+    } else if (currentStep == step) {
+      return StepState.editing;
+    } else {
+      return StepState.indexed;
+      // return StepState.disabled;
+    }
+  }
+
   List<Step> getSteps() {
     return <Step>[
       Step(
-        state: currentStep > 0 ? StepState.complete : StepState.indexed,
-        isActive: currentStep >= 0,
+        state: getStepState(0),
+        isActive: currentStep == 0,
         title: const Text("Account Info"),
-        content: Column(
-          children: const [
+        content: const Column(
+          children: [
             CustomInput(
               hint: "First Name",
               inputBorder: OutlineInputBorder(),
@@ -69,11 +80,11 @@ class _FormPageState extends State<FormPage> {
         ),
       ),
       Step(
-        state: currentStep > 1 ? StepState.complete : StepState.indexed,
-        isActive: currentStep >= 1,
+        state: getStepState(1),
+        isActive: currentStep == 1,
         title: const Text("Address"),
-        content: Column(
-          children: const [
+        content: const Column(
+          children: [
             CustomInput(
               hint: "City and State",
               inputBorder: OutlineInputBorder(),
@@ -86,11 +97,11 @@ class _FormPageState extends State<FormPage> {
         ),
       ),
       Step(
-        state: currentStep > 2 ? StepState.complete : StepState.indexed,
-        isActive: currentStep >= 2,
+        state: getStepState(2),
+        isActive: currentStep == 3,
         title: const Text("Misc"),
-        content: Column(
-          children: const [
+        content: const Column(
+          children: [
             CustomInput(
               hint: "Bio",
               inputBorder: OutlineInputBorder(),

@@ -5,6 +5,13 @@ void main() {
   runApp(const MyApp());
 }
 
+class MyData {
+  String name = '';
+  String phone = '';
+  String email = '';
+  String age = '';
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 

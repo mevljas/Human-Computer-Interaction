@@ -1,0 +1,20 @@
+{
+    "[dart]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.suggest.insertMode": "replace",
+        "editor.rulers": [
+            80
+        ]
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "editor.formatOnSave": true,
+    "cSpell.enableFiletypes": [
+        "dart"
+    ],
+    "cSpell.language": "en,lorem,sl,en-US",
+}
