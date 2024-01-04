@@ -1,3 +1,4 @@
+import 'package:avtek/widgets/summary_row.dart';
 import 'package:flutter/material.dart';
 
 class PartialSummary extends StatelessWidget {
@@ -5,36 +6,15 @@ class PartialSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        Text(
-          'Pickup location: location',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        Text(
-          'Dropoff location: location',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        Text(
-          'Pickup TIme: time',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        Text(
-          'Dropoff Time: time',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        Text(
-          'Car: car',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        Text(
-          'Transmission: transmission',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        Text(
-          'Engine: engine',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        SummaryRow(title: 'Pickup location', value: 'Ljubljana'),
+        SummaryRow(title: 'Dropoff location', value: 'Maribor'),
+        SummaryRow(title: 'Pickup time', value: '12:00'),
+        SummaryRow(title: 'Dropoff time', value: '14:00'),
+        SummaryRow(title: 'Car', value: 'BMW'),
+        SummaryRow(title: 'Price per day', value: '50€'),
+        SummaryRow(title: 'Total price', value: '100€'),
       ],
     );
   }

@@ -1,5 +1,4 @@
 import 'package:avtek/forms/car_form.dart';
-import 'package:avtek/forms/complete_form.dart';
 import 'package:avtek/forms/general_form.dart';
 import 'package:avtek/forms/partial_summary.dart';
 import 'package:flutter/material.dart';
@@ -63,12 +62,12 @@ class _MainPageState extends State<MainPage> {
 
   List<Step> getSteps() {
     return <Step>[
-      Step(
-        state: getStepState(0),
-        isActive: currentStep == 0,
-        title: const Text("Account Info"),
-        content: const CompleteForm(),
-      ),
+      // Step(
+      //   state: getStepState(0),
+      //   isActive: currentStep == 0,
+      //   title: const Text("Account Info"),
+      //   content: const CompleteForm(),
+      // ),
       Step(
         state: getStepState(0),
         isActive: currentStep == 0,
