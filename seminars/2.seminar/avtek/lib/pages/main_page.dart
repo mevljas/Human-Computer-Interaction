@@ -1,14 +1,14 @@
-import 'package:avtek/custom_input.dart';
+import 'package:avtek/widgets/my_custom_form.dart';
 import 'package:flutter/material.dart';
 
-class FormPage extends StatefulWidget {
-  const FormPage({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
-  _FormPageState createState() => _FormPageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _FormPageState extends State<FormPage> {
+class _MainPageState extends State<MainPage> {
   int currentStep = 0;
   @override
   Widget build(BuildContext context) {
@@ -66,48 +66,7 @@ class _FormPageState extends State<FormPage> {
         state: getStepState(0),
         isActive: currentStep == 0,
         title: const Text("Account Info"),
-        content: const Column(
-          children: [
-            CustomInput(
-              hint: "First Name",
-              inputBorder: OutlineInputBorder(),
-            ),
-            CustomInput(
-              hint: "Last Name",
-              inputBorder: OutlineInputBorder(),
-            ),
-          ],
-        ),
-      ),
-      Step(
-        state: getStepState(1),
-        isActive: currentStep == 1,
-        title: const Text("Address"),
-        content: const Column(
-          children: [
-            CustomInput(
-              hint: "City and State",
-              inputBorder: OutlineInputBorder(),
-            ),
-            CustomInput(
-              hint: "Postal Code",
-              inputBorder: OutlineInputBorder(),
-            ),
-          ],
-        ),
-      ),
-      Step(
-        state: getStepState(2),
-        isActive: currentStep == 3,
-        title: const Text("Misc"),
-        content: const Column(
-          children: [
-            CustomInput(
-              hint: "Bio",
-              inputBorder: OutlineInputBorder(),
-            ),
-          ],
-        ),
+        content: const MyCustomForm(),
       ),
     ];
   }
