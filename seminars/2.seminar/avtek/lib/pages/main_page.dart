@@ -1,5 +1,5 @@
 import 'package:avtek/forms/complete_form.dart';
-import 'package:avtek/forms/first_form.dart';
+import 'package:avtek/forms/general_form.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -71,7 +71,7 @@ class _MainPageState extends State<MainPage> {
         state: getStepState(0),
         isActive: currentStep == 0,
         title: const Text("First form"),
-        content: const FirstForm(),
+        content: const GeneralForm(),
       ),
     ];
   }
