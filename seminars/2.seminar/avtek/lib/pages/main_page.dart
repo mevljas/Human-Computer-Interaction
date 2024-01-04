@@ -1,5 +1,7 @@
+import 'package:avtek/forms/car_form.dart';
 import 'package:avtek/forms/complete_form.dart';
 import 'package:avtek/forms/general_form.dart';
+import 'package:avtek/forms/partial_summary.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -70,8 +72,20 @@ class _MainPageState extends State<MainPage> {
       Step(
         state: getStepState(0),
         isActive: currentStep == 0,
-        title: const Text("First form"),
+        title: const Text("General Info"),
         content: const GeneralForm(),
+      ),
+      Step(
+        state: getStepState(1),
+        isActive: currentStep == 1,
+        title: const Text("Car Info"),
+        content: const CarForm(),
+      ),
+      Step(
+        state: getStepState(2),
+        isActive: currentStep == 2,
+        title: const Text("Partial Summary"),
+        content: const PartialSummary(),
       ),
     ];
   }

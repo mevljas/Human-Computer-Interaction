@@ -7,11 +7,11 @@ class GeneralForm extends StatefulWidget {
 
   @override
   State<GeneralForm> createState() {
-    return _CompleteFormState();
+    return _GeneralFormState();
   }
 }
 
-class _CompleteFormState extends State<GeneralForm> {
+class _GeneralFormState extends State<GeneralForm> {
   bool autoValidate = true;
   bool readOnly = false;
   bool showSegmentedControl = true;
