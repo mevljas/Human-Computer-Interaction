@@ -1,4 +1,5 @@
 import 'package:avtek/menu/menu_bar_wrapper.dart';
+import 'package:avtek/pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -23,7 +24,9 @@ class MyApp extends StatelessWidget {
             debugDumpApp();
           }),
         },
-        child: const MenuBarWrapper(),
+        child: const MenuBarWrapper(
+          child: MainPage(),
+        ),
       ),
     );
   }

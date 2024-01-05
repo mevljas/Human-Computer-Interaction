@@ -1,3 +1,4 @@
+import 'package:avtek/menu/menu_bar_wrapper.dart';
 import 'package:avtek/pages/summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -167,7 +168,10 @@ class _PaymentFormState extends State<PaymentForm> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SummaryPage()),
+                        builder: (context) => const MenuBarWrapper(
+                          child: SummaryPage(),
+                        ),
+                      ),
                     );
                   },
                   // color: Theme.of(context).colorScheme.secondary,
