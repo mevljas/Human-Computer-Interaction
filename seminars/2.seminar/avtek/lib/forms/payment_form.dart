@@ -67,8 +67,7 @@ class _PaymentFormState extends State<PaymentForm> {
                   // valueTransformer: (text) => num.tryParse(text),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
-                    FormBuilderValidators.numeric(),
-                    FormBuilderValidators.max(70),
+                    FormBuilderValidators.creditCard(),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.number,
@@ -93,8 +92,9 @@ class _PaymentFormState extends State<PaymentForm> {
                       },
                     ),
                   ),
-                  validator: FormBuilderValidators.compose(
-                      [FormBuilderValidators.required()]),
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                  ]),
                   // locale: const Locale.fromSubtags(languageCode: 'fr'),
                 ),
                 const SizedBox(height: 20),
@@ -118,7 +118,7 @@ class _PaymentFormState extends State<PaymentForm> {
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.numeric(),
-                    FormBuilderValidators.max(70),
+                    FormBuilderValidators.equalLength(3),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.number,
