@@ -16,9 +16,10 @@ class _CarFormState extends State<CarForm> {
   bool readOnly = false;
   bool showSegmentedControl = true;
   final _formKey = GlobalKey<FormBuilderState>();
-  final bool _ageHasError = false;
-  bool _pickupLocationHasError = false;
-  final bool _dropoffLocationHasError = false;
+  bool _carSizeHasError = false;
+  bool _transmissionTypeHasError = false;
+  bool _engineTypeHasError = false;
+  bool _carHasError = false;
 
   final carSizes = ['Small', 'Medium', 'Large'];
 
@@ -282,7 +283,7 @@ class _CarFormState extends State<CarForm> {
                   name: 'car_size',
                   decoration: InputDecoration(
                     labelText: 'Car size',
-                    suffix: _pickupLocationHasError
+                    suffix: _carSizeHasError
                         ? const Icon(Icons.error)
                         : const Icon(Icons.check),
                     hintText: 'Select your preferred car size',
@@ -298,7 +299,7 @@ class _CarFormState extends State<CarForm> {
                       .toList(),
                   onChanged: (val) {
                     setState(() {
-                      _pickupLocationHasError = !(_formKey
+                      _carSizeHasError = !(_formKey
                               .currentState?.fields['car_size']
                               ?.validate() ??
                           false);
@@ -311,7 +312,7 @@ class _CarFormState extends State<CarForm> {
                   name: 'transmission_type',
                   decoration: InputDecoration(
                     labelText: 'Transmission type',
-                    suffix: _pickupLocationHasError
+                    suffix: _transmissionTypeHasError
                         ? const Icon(Icons.error)
                         : const Icon(Icons.check),
                     hintText: 'Select your preferred transmission type',
@@ -327,7 +328,7 @@ class _CarFormState extends State<CarForm> {
                       .toList(),
                   onChanged: (val) {
                     setState(() {
-                      _pickupLocationHasError = !(_formKey
+                      _transmissionTypeHasError = !(_formKey
                               .currentState?.fields['transmission_type']
                               ?.validate() ??
                           false);
@@ -340,7 +341,7 @@ class _CarFormState extends State<CarForm> {
                   name: 'engine_type',
                   decoration: InputDecoration(
                     labelText: 'Engine type',
-                    suffix: _pickupLocationHasError
+                    suffix: _engineTypeHasError
                         ? const Icon(Icons.error)
                         : const Icon(Icons.check),
                     hintText: 'Select your preferred engine type',
@@ -356,10 +357,38 @@ class _CarFormState extends State<CarForm> {
                       .toList(),
                   onChanged: (val) {
                     setState(() {
-                      _pickupLocationHasError = !(_formKey
+                      _engineTypeHasError = !(_formKey
                               .currentState?.fields['engine_type']
                               ?.validate() ??
                           false);
+                    });
+                  },
+                  valueTransformer: (val) => val?.toString(),
+                ),
+                const SizedBox(height: 20),
+                FormBuilderDropdown<String>(
+                  name: 'car',
+                  decoration: InputDecoration(
+                    labelText: 'Car size',
+                    suffix: _carHasError
+                        ? const Icon(Icons.error)
+                        : const Icon(Icons.check),
+                    hintText: 'Select your preferred car',
+                  ),
+                  validator: FormBuilderValidators.compose(
+                      [FormBuilderValidators.required()]),
+                  items: mediumCars
+                      .map((location) => DropdownMenuItem(
+                            alignment: AlignmentDirectional.center,
+                            value: location,
+                            child: Text(location),
+                          ))
+                      .toList(),
+                  onChanged: (val) {
+                    setState(() {
+                      _carHasError =
+                          !(_formKey.currentState?.fields['car']?.validate() ??
+                              false);
                     });
                   },
                   valueTransformer: (val) => val?.toString(),
