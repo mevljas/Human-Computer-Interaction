@@ -14,6 +14,7 @@ class SummaryRow extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.titleMedium,
         ),
+        const SizedBox(width: 10),
         Text(
           value,
           style: Theme.of(context).textTheme.bodyLarge,
