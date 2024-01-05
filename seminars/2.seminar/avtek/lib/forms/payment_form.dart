@@ -2,6 +2,7 @@ import 'package:avtek/pages/summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:intl/intl.dart';
 
 class PaymentForm extends StatefulWidget {
   const PaymentForm({Key? key}) : super(key: key);
@@ -72,6 +73,29 @@ class _PaymentFormState extends State<PaymentForm> {
                   // initialValue: '12',
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next,
+                ),
+                const SizedBox(height: 20),
+                FormBuilderDateTimePicker(
+                  name: 'expiration_date',
+                  initialEntryMode: DatePickerEntryMode.calendar,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now(),
+                  format: DateFormat('MM/yyyy'),
+                  lastDate: DateTime(2040, 1, 1),
+                  inputType: InputType.date,
+                  decoration: InputDecoration(
+                    labelText: 'Expiration date',
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        _formKey.currentState!.fields['expiration_date']
+                            ?.didChange(null);
+                      },
+                    ),
+                  ),
+                  validator: FormBuilderValidators.compose(
+                      [FormBuilderValidators.required()]),
+                  // locale: const Locale.fromSubtags(languageCode: 'fr'),
                 ),
                 const SizedBox(height: 20),
                 FormBuilderTextField(
