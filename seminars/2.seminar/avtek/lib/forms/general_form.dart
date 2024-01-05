@@ -16,9 +16,10 @@ class _GeneralFormState extends State<GeneralForm> {
   bool readOnly = false;
   bool showSegmentedControl = true;
   final _formKey = GlobalKey<FormBuilderState>();
-  final bool _ageHasError = false;
   bool _pickupLocationHasError = false;
-  final bool _dropoffLocationHasError = false;
+  bool _dropoffLocationHasError = false;
+  final bool _pickupTimeHasError = false;
+  bool _returnTimeHasError = false;
 
   var locationOptions = [
     'Ljubljana',
@@ -78,6 +79,8 @@ class _GeneralFormState extends State<GeneralForm> {
                     ),
                   ),
                   initialTime: const TimeOfDay(hour: 8, minute: 0),
+                  validator: FormBuilderValidators.compose(
+                      [FormBuilderValidators.required()]),
                   // locale: const Locale.fromSubtags(languageCode: 'fr'),
                 ),
                 const SizedBox(height: 20),
@@ -99,6 +102,16 @@ class _GeneralFormState extends State<GeneralForm> {
                     ),
                   ),
                   initialTime: const TimeOfDay(hour: 8, minute: 0),
+                  onChanged: (val) {
+                    setState(() {
+                      _returnTimeHasError = !(_formKey
+                              .currentState?.fields['return_time']
+                              ?.validate() ??
+                          false);
+                    });
+                  },
+                  validator: FormBuilderValidators.compose(
+                      [FormBuilderValidators.required()]),
                   // locale: const Locale.fromSubtags(languageCode: 'fr'),
                 ),
                 const SizedBox(height: 20),
@@ -135,7 +148,7 @@ class _GeneralFormState extends State<GeneralForm> {
                   name: 'drop_off_location',
                   decoration: InputDecoration(
                     labelText: 'Drop off location',
-                    suffix: _pickupLocationHasError
+                    suffix: _dropoffLocationHasError
                         ? const Icon(Icons.error)
                         : const Icon(Icons.check),
                     hintText: 'Select your drop off location',
@@ -151,7 +164,7 @@ class _GeneralFormState extends State<GeneralForm> {
                       .toList(),
                   onChanged: (val) {
                     setState(() {
-                      _pickupLocationHasError = !(_formKey
+                      _dropoffLocationHasError = !(_formKey
                               .currentState?.fields['drop_off_location']
                               ?.validate() ??
                           false);
