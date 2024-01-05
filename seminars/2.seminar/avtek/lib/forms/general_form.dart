@@ -63,7 +63,7 @@ class _GeneralFormState extends State<GeneralForm> {
               children: <Widget>[
                 FormBuilderDateTimePicker(
                   name: 'pickup_time',
-                  initialEntryMode: DatePickerEntryMode.calendar,
+                  initialEntryMode: DatePickerEntryMode.calendarOnly,
                   initialDate: DateTime.now(),
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2025, 1, 1),
@@ -86,7 +86,7 @@ class _GeneralFormState extends State<GeneralForm> {
                 const SizedBox(height: 20),
                 FormBuilderDateTimePicker(
                   name: 'return_time',
-                  initialEntryMode: DatePickerEntryMode.calendar,
+                  initialEntryMode: DatePickerEntryMode.calendarOnly,
                   initialDate: DateTime.now(),
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2025, 1, 1),

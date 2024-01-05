@@ -77,7 +77,7 @@ class _PaymentFormState extends State<PaymentForm> {
                 const SizedBox(height: 20),
                 FormBuilderDateTimePicker(
                   name: 'expiration_date',
-                  initialEntryMode: DatePickerEntryMode.calendar,
+                  initialEntryMode: DatePickerEntryMode.calendarOnly,
                   initialDate: DateTime.now(),
                   firstDate: DateTime.now(),
                   format: DateFormat('MM/yyyy'),

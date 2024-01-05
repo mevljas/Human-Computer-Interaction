@@ -50,7 +50,7 @@ class _CompleteFormState extends State<CompleteForm> {
                 const SizedBox(height: 15),
                 FormBuilderDateTimePicker(
                   name: 'date',
-                  initialEntryMode: DatePickerEntryMode.calendar,
+                  initialEntryMode: DatePickerEntryMode.calendarOnly,
                   initialValue: DateTime.now(),
                   inputType: InputType.both,
                   decoration: InputDecoration(
