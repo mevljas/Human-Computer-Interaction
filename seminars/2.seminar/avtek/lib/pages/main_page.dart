@@ -4,6 +4,7 @@ import 'package:avtek/forms/customer_form.dart';
 import 'package:avtek/forms/general_form.dart';
 import 'package:avtek/forms/partial_summary.dart';
 import 'package:avtek/forms/payment_type_form.dart';
+import 'package:avtek/menu/menu_bar_wrapper.dart';
 import 'package:avtek/pages/summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -51,7 +52,10 @@ class _MainPageState extends State<MainPage> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SummaryPage()),
+                        builder: (context) => const MenuBarWrapper(
+                          child: SummaryPage(),
+                        ),
+                      ),
                     );
                   }
                 }
