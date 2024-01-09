@@ -14,10 +14,6 @@ class CustomerForm extends StatefulWidget {
 }
 
 class _CustomerFormState extends State<CustomerForm> {
-  bool autoValidate = true;
-  bool readOnly = false;
-  bool showSegmentedControl = true;
-
   bool _firstNameHasError = false;
   bool _lastNameHasError = false;
   bool _addressHasError = false;
@@ -45,7 +41,7 @@ class _CustomerFormState extends State<CustomerForm> {
             child: Column(
               children: <Widget>[
                 FormBuilderTextField(
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.disabled,
                   name: 'first_name',
                   decoration: InputDecoration(
                     labelText: 'First name',
@@ -73,7 +69,7 @@ class _CustomerFormState extends State<CustomerForm> {
                 ),
                 const SizedBox(height: 15),
                 FormBuilderTextField(
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.disabled,
                   name: 'last_name',
                   decoration: InputDecoration(
                     labelText: 'Last name',
@@ -101,7 +97,7 @@ class _CustomerFormState extends State<CustomerForm> {
                 ),
                 const SizedBox(height: 15),
                 FormBuilderTextField(
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.disabled,
                   name: 'address',
                   decoration: InputDecoration(
                     labelText: 'Address',
@@ -129,7 +125,7 @@ class _CustomerFormState extends State<CustomerForm> {
                 ),
                 const SizedBox(height: 15),
                 FormBuilderTextField(
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.disabled,
                   name: 'email',
                   decoration: InputDecoration(
                     labelText: 'Email',
@@ -158,7 +154,7 @@ class _CustomerFormState extends State<CustomerForm> {
                 ),
                 const SizedBox(height: 15),
                 FormBuilderTextField(
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.disabled,
                   name: 'phone',
                   decoration: InputDecoration(
                     labelText: 'Phone',
@@ -186,7 +182,7 @@ class _CustomerFormState extends State<CustomerForm> {
                 ),
                 const SizedBox(height: 15),
                 FormBuilderTextField(
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.disabled,
                   name: 'age',
                   decoration: InputDecoration(
                     labelText: 'Age',
@@ -216,7 +212,7 @@ class _CustomerFormState extends State<CustomerForm> {
                 const SizedBox(height: 15),
                 // TODO(mevljas): use a more appropriate widget.
                 FormBuilderTextField(
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.disabled,
                   name: 'license_age',
                   decoration: InputDecoration(
                     labelText: 'License age',

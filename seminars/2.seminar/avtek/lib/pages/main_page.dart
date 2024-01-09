@@ -89,14 +89,11 @@ class _MainPageState extends State<MainPage> {
 
   StepState _getStepState(int step) {
     // final stepState = formKeys[step].currentState;
-    final currentState = formKeys[_currentStep].currentState;
+    // final currentState = formKeys[_currentStep].currentState;
     if (_currentStep > step) {
       return StepState.complete;
     } else if (_currentStep == step) {
       return StepState.editing;
-    } else if (step == _currentStep + 1 &&
-        (currentState?.validate() ?? false)) {
-      return StepState.indexed;
     } else {
       // return StepState.indexed;
       return StepState.disabled;

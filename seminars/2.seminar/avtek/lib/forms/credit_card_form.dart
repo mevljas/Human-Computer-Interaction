@@ -107,7 +107,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
                 ),
                 const SizedBox(height: 20),
                 FormBuilderTextField(
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.disabled,
                   name: 'ccv',
                   decoration: InputDecoration(
                     labelText: 'CCV',
