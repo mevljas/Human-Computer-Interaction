@@ -41,13 +41,6 @@ class _CustomerFormState extends State<CustomerForm> {
               debugPrint(widget.formKey.currentState!.value.toString());
             },
             autovalidateMode: AutovalidateMode.disabled,
-            initialValue: const {
-              'movie_rating': 5,
-              'best_language': 'Dart',
-              'age': '13',
-              'gender': 'Male',
-              'languages_filter': ['Dart']
-            },
             skipDisabled: true,
             child: Column(
               children: <Widget>[

@@ -19,7 +19,8 @@ class _CreditCardFormState extends State<CreditCardForm> {
   bool readOnly = false;
   bool showSegmentedControl = true;
   bool _cardNumberHasError = false;
-  final bool _ccvHasError = false;
+  bool _expirationDateHasError = false;
+  bool _ccvHasError = false;
 
   void _onChanged(dynamic val) => debugPrint(val.toString());
 
@@ -47,7 +48,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
             child: Column(
               children: <Widget>[
                 FormBuilderTextField(
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.disabled,
                   name: 'number',
                   decoration: InputDecoration(
                     labelText: 'Card number',
@@ -91,6 +92,14 @@ class _CreditCardFormState extends State<CreditCardForm> {
                       },
                     ),
                   ),
+                  onChanged: (val) {
+                    setState(() {
+                      _expirationDateHasError = !(widget
+                              .formKey.currentState?.fields['expiration_date']
+                              ?.validate() ??
+                          false);
+                    });
+                  },
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                   ]),
@@ -108,7 +117,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
                   ),
                   onChanged: (val) {
                     setState(() {
-                      _cardNumberHasError = !(widget
+                      _ccvHasError = !(widget
                               .formKey.currentState?.fields['ccv']
                               ?.validate() ??
                           false);

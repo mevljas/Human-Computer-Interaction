@@ -19,7 +19,7 @@ class _GeneralFormState extends State<GeneralForm> {
   bool showSegmentedControl = true;
   bool _pickupLocationHasError = false;
   bool _dropoffLocationHasError = false;
-  final bool _pickupTimeHasError = false;
+  bool _pickupTimeHasError = false;
   bool _returnTimeHasError = false;
 
   var locationOptions = [
@@ -80,6 +80,14 @@ class _GeneralFormState extends State<GeneralForm> {
                     ),
                   ),
                   initialTime: const TimeOfDay(hour: 8, minute: 0),
+                  onChanged: (val) {
+                    setState(() {
+                      _pickupTimeHasError = !(widget
+                              .formKey.currentState?.fields['pickup_time']
+                              ?.validate() ??
+                          false);
+                    });
+                  },
                   validator: FormBuilderValidators.compose(
                       [FormBuilderValidators.required()]),
                   // locale: const Locale.fromSubtags(languageCode: 'fr'),

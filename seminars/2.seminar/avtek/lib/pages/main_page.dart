@@ -4,8 +4,9 @@ import 'package:avtek/forms/customer_form.dart';
 import 'package:avtek/forms/general_form.dart';
 import 'package:avtek/forms/partial_summary.dart';
 import 'package:avtek/forms/payment_type_form.dart';
+import 'package:avtek/forms/summary.dart';
 import 'package:avtek/menu/menu_bar_wrapper.dart';
-import 'package:avtek/pages/summary_page.dart';
+import 'package:avtek/pages/order_completed_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -19,7 +20,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentStep = 0;
   List<GlobalKey<FormBuilderState>> formKeys = [
-    for (var i = 0; i < 6; i += 1) GlobalKey<FormBuilderState>()
+    for (var i = 0; i < 7; i += 1) GlobalKey<FormBuilderState>()
   ];
 
   @override
@@ -53,7 +54,7 @@ class _MainPageState extends State<MainPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => const MenuBarWrapper(
-                          child: SummaryPage(),
+                          child: OrderCompletedPage(),
                         ),
                       ),
                     );
@@ -87,13 +88,18 @@ class _MainPageState extends State<MainPage> {
   }
 
   StepState _getStepState(int step) {
+    // final stepState = formKeys[step].currentState;
+    final currentState = formKeys[_currentStep].currentState;
     if (_currentStep > step) {
       return StepState.complete;
     } else if (_currentStep == step) {
       return StepState.editing;
-    } else {
+    } else if (step == _currentStep + 1 &&
+        (currentState?.validate() ?? false)) {
       return StepState.indexed;
-      // return StepState.disabled;
+    } else {
+      // return StepState.indexed;
+      return StepState.disabled;
     }
   }
 
@@ -140,6 +146,12 @@ class _MainPageState extends State<MainPage> {
         isActive: _currentStep == 5,
         title: const Text("Credit card info"),
         content: CreditCardForm(formKey: formKeys[5]),
+      ),
+      Step(
+        state: _getStepState(6),
+        isActive: _currentStep == 6,
+        title: const Text("Summary"),
+        content: const Summary(),
       ),
     ];
   }

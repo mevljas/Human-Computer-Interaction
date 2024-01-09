@@ -73,7 +73,7 @@ class MenuBarWrapper extends StatelessWidget {
                         child: const MenuAcceleratorLabel('Mi&nify'),
                       ),
                     ],
-                    child: const MenuAcceleratorLabel('&View'),
+                    child: const MenuAcceleratorLabel('&Edit'),
                   ),
                 ],
               ),
