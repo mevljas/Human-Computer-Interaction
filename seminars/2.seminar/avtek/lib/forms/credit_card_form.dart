@@ -64,8 +64,10 @@ class _CreditCardFormState extends State<CreditCardForm> {
                     });
                   },
                   // valueTransformer: (text) => num.tryParse(text),
-                  validator: FormBuilderValidators.compose(
-                      [FormBuilderValidators.creditCard()]),
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                    FormBuilderValidators.creditCard(),
+                  ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next,
@@ -89,8 +91,9 @@ class _CreditCardFormState extends State<CreditCardForm> {
                       },
                     ),
                   ),
-                  validator: FormBuilderValidators.compose(
-                      [FormBuilderValidators.required()]),
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                  ]),
                   // locale: const Locale.fromSubtags(languageCode: 'fr'),
                 ),
                 const SizedBox(height: 20),
@@ -131,11 +134,10 @@ class _CreditCardFormState extends State<CreditCardForm> {
           //     Expanded(
           //       child: ElevatedButton(
           //         onPressed: () {
-          //           if (widget.formKey.currentState?.saveAndValidate() ??
-          //               false) {
-          //             debugPrint(widget.formKey.currentState?.value.toString());
+          //           if (_formKey.currentState?.saveAndValidate() ?? false) {
+          //             debugPrint(_formKey.currentState?.value.toString());
           //           } else {
-          //             debugPrint(widget.formKey.currentState?.value.toString());
+          //             debugPrint(_formKey.currentState?.value.toString());
           //             debugPrint('validation failed');
           //           }
           //         },
@@ -149,7 +151,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
           //     Expanded(
           //       child: OutlinedButton(
           //         onPressed: () {
-          //           widget.formKey.currentState?.reset();
+          //           _formKey.currentState?.reset();
           //         },
           //         // color: Theme.of(context).colorScheme.secondary,
           //         child: Text(
@@ -165,7 +167,10 @@ class _CreditCardFormState extends State<CreditCardForm> {
           //           Navigator.pushReplacement(
           //             context,
           //             MaterialPageRoute(
-          //                 builder: (context) => const SummaryPage()),
+          //               builder: (context) => const MenuBarWrapper(
+          //                 child: SummaryPage(),
+          //               ),
+          //             ),
           //           );
           //         },
           //         // color: Theme.of(context).colorScheme.secondary,

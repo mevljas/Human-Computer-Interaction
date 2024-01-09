@@ -1,8 +1,9 @@
-import 'package:avtek/pages/main_page.dart';
 import 'package:flutter/material.dart';
 
 class MenuBarWrapper extends StatelessWidget {
-  const MenuBarWrapper({super.key});
+  const MenuBarWrapper({super.key, required this.child});
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +80,8 @@ class MenuBarWrapper extends StatelessWidget {
             ),
           ],
         ),
-        const Expanded(
-          child: MainPage(),
+        Expanded(
+          child: child,
         ),
       ],
     );

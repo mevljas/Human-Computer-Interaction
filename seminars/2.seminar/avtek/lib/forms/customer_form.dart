@@ -72,7 +72,7 @@ class _CustomerFormState extends State<CustomerForm> {
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.minLength(2),
-                    FormBuilderValidators.maxLength(30),
+                    FormBuilderValidators.maxLength(20),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.text,
@@ -100,7 +100,7 @@ class _CustomerFormState extends State<CustomerForm> {
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.minLength(2),
-                    FormBuilderValidators.maxLength(30),
+                    FormBuilderValidators.maxLength(20),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.text,
@@ -155,7 +155,9 @@ class _CustomerFormState extends State<CustomerForm> {
                   // valueTransformer: (text) => num.tryParse(text),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
-                    FormBuilderValidators.email()
+                    FormBuilderValidators.email(),
+                    FormBuilderValidators.maxLength(50),
+                    FormBuilderValidators.min(5),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.text,
@@ -211,7 +213,7 @@ class _CustomerFormState extends State<CustomerForm> {
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.numeric(),
-                    FormBuilderValidators.min(1),
+                    FormBuilderValidators.min(0),
                     FormBuilderValidators.max(150),
                   ]),
                   // initialValue: '12',
@@ -241,8 +243,8 @@ class _CustomerFormState extends State<CustomerForm> {
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.numeric(),
+                    FormBuilderValidators.max(100),
                     FormBuilderValidators.min(0),
-                    FormBuilderValidators.max(130),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.number,
@@ -257,7 +259,7 @@ class _CustomerFormState extends State<CustomerForm> {
                     text: const TextSpan(
                       children: [
                         TextSpan(
-                          text: 'I would like car insurance ',
+                          text: 'Would you like car insurance ',
                           style: TextStyle(color: Colors.black),
                         ),
                       ],
