@@ -3,19 +3,20 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class CarForm extends StatefulWidget {
-  const CarForm({Key? key}) : super(key: key);
+  const CarForm({Key? key, required this.formKey}) : super(key: key);
 
   @override
   State<CarForm> createState() {
     return _CarFormState();
   }
+
+  final formKey;
 }
 
 class _CarFormState extends State<CarForm> {
   bool autoValidate = true;
   bool readOnly = false;
   bool showSegmentedControl = true;
-  final _formKey = GlobalKey<FormBuilderState>();
   final bool _ageHasError = false;
   bool _pickupLocationHasError = false;
   final bool _dropoffLocationHasError = false;
@@ -261,11 +262,11 @@ class _CarFormState extends State<CarForm> {
       child: Column(
         children: <Widget>[
           FormBuilder(
-            key: _formKey,
+            key: widget.formKey,
             // enabled: false,
             onChanged: () {
-              _formKey.currentState!.save();
-              debugPrint(_formKey.currentState!.value.toString());
+              widget.formKey.currentState!.save();
+              debugPrint(widget.formKey.currentState!.value.toString());
             },
             autovalidateMode: AutovalidateMode.disabled,
             initialValue: const {
@@ -298,8 +299,8 @@ class _CarFormState extends State<CarForm> {
                       .toList(),
                   onChanged: (val) {
                     setState(() {
-                      _pickupLocationHasError = !(_formKey
-                              .currentState?.fields['car_size']
+                      _pickupLocationHasError = !(widget
+                              .formKey.currentState?.fields['car_size']
                               ?.validate() ??
                           false);
                     });
@@ -327,8 +328,8 @@ class _CarFormState extends State<CarForm> {
                       .toList(),
                   onChanged: (val) {
                     setState(() {
-                      _pickupLocationHasError = !(_formKey
-                              .currentState?.fields['transmission_type']
+                      _pickupLocationHasError = !(widget
+                              .formKey.currentState?.fields['transmission_type']
                               ?.validate() ??
                           false);
                     });
@@ -356,8 +357,8 @@ class _CarFormState extends State<CarForm> {
                       .toList(),
                   onChanged: (val) {
                     setState(() {
-                      _pickupLocationHasError = !(_formKey
-                              .currentState?.fields['engine_type']
+                      _pickupLocationHasError = !(widget
+                              .formKey.currentState?.fields['engine_type']
                               ?.validate() ??
                           false);
                     });
@@ -369,40 +370,41 @@ class _CarFormState extends State<CarForm> {
             ),
           ),
           const SizedBox(height: 50),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState?.saveAndValidate() ?? false) {
-                      debugPrint(_formKey.currentState?.value.toString());
-                    } else {
-                      debugPrint(_formKey.currentState?.value.toString());
-                      debugPrint('validation failed');
-                    }
-                  },
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () {
-                    _formKey.currentState?.reset();
-                  },
-                  // color: Theme.of(context).colorScheme.secondary,
-                  child: Text(
-                    'Reset',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   children: <Widget>[
+          //     Expanded(
+          //       child: ElevatedButton(
+          //         onPressed: () {
+          //           if (widget.formKey.currentState?.saveAndValidate() ??
+          //               false) {
+          //             debugPrint(widget.formKey.currentState?.value.toString());
+          //           } else {
+          //             debugPrint(widget.formKey.currentState?.value.toString());
+          //             debugPrint('validation failed');
+          //           }
+          //         },
+          //         child: const Text(
+          //           'Submit',
+          //           style: TextStyle(color: Colors.black),
+          //         ),
+          //       ),
+          //     ),
+          //     const SizedBox(width: 20),
+          //     Expanded(
+          //       child: OutlinedButton(
+          //         onPressed: () {
+          //           widget.formKey.currentState?.reset();
+          //         },
+          //         // color: Theme.of(context).colorScheme.secondary,
+          //         child: Text(
+          //           'Reset',
+          //           style: TextStyle(
+          //               color: Theme.of(context).colorScheme.secondary),
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

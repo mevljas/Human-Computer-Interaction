@@ -1,24 +1,23 @@
-import 'package:avtek/pages/summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 
-class PaymentForm extends StatefulWidget {
-  const PaymentForm({Key? key}) : super(key: key);
+class CreditCardForm extends StatefulWidget {
+  const CreditCardForm({Key? key, required this.formKey}) : super(key: key);
+
+  final formKey;
 
   @override
-  State<PaymentForm> createState() {
-    return _PaymentFormState();
+  State<CreditCardForm> createState() {
+    return _CreditCardFormState();
   }
 }
 
-class _PaymentFormState extends State<PaymentForm> {
+class _CreditCardFormState extends State<CreditCardForm> {
   bool autoValidate = true;
   bool readOnly = false;
   bool showSegmentedControl = true;
-  final _formKey = GlobalKey<FormBuilderState>();
-
   bool _cardNumberHasError = false;
   final bool _ccvHasError = false;
 
@@ -30,11 +29,11 @@ class _PaymentFormState extends State<PaymentForm> {
       child: Column(
         children: <Widget>[
           FormBuilder(
-            key: _formKey,
+            key: widget.formKey,
             // enabled: false,
             onChanged: () {
-              _formKey.currentState!.save();
-              debugPrint(_formKey.currentState!.value.toString());
+              widget.formKey.currentState!.save();
+              debugPrint(widget.formKey.currentState!.value.toString());
             },
             autovalidateMode: AutovalidateMode.disabled,
             initialValue: const {
@@ -58,18 +57,15 @@ class _PaymentFormState extends State<PaymentForm> {
                   ),
                   onChanged: (val) {
                     setState(() {
-                      _cardNumberHasError = !(_formKey
-                              .currentState?.fields['number']
+                      _cardNumberHasError = !(widget
+                              .formKey.currentState?.fields['number']
                               ?.validate() ??
                           false);
                     });
                   },
                   // valueTransformer: (text) => num.tryParse(text),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                    FormBuilderValidators.numeric(),
-                    FormBuilderValidators.max(70),
-                  ]),
+                  validator: FormBuilderValidators.compose(
+                      [FormBuilderValidators.creditCard()]),
                   // initialValue: '12',
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next,
@@ -88,7 +84,7 @@ class _PaymentFormState extends State<PaymentForm> {
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () {
-                        _formKey.currentState!.fields['expiration_date']
+                        widget.formKey.currentState!.fields['expiration_date']
                             ?.didChange(null);
                       },
                     ),
@@ -109,16 +105,17 @@ class _PaymentFormState extends State<PaymentForm> {
                   ),
                   onChanged: (val) {
                     setState(() {
-                      _cardNumberHasError =
-                          !(_formKey.currentState?.fields['ccv']?.validate() ??
-                              false);
+                      _cardNumberHasError = !(widget
+                              .formKey.currentState?.fields['ccv']
+                              ?.validate() ??
+                          false);
                     });
                   },
                   // valueTransformer: (text) => num.tryParse(text),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.numeric(),
-                    FormBuilderValidators.max(70),
+                    FormBuilderValidators.equalLength(3),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.number,
@@ -129,57 +126,58 @@ class _PaymentFormState extends State<PaymentForm> {
             ),
           ),
           const SizedBox(height: 50),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState?.saveAndValidate() ?? false) {
-                      debugPrint(_formKey.currentState?.value.toString());
-                    } else {
-                      debugPrint(_formKey.currentState?.value.toString());
-                      debugPrint('validation failed');
-                    }
-                  },
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () {
-                    _formKey.currentState?.reset();
-                  },
-                  // color: Theme.of(context).colorScheme.secondary,
-                  child: Text(
-                    'Reset',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SummaryPage()),
-                    );
-                  },
-                  // color: Theme.of(context).colorScheme.secondary,
-                  child: Text(
-                    'Finish',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   children: <Widget>[
+          //     Expanded(
+          //       child: ElevatedButton(
+          //         onPressed: () {
+          //           if (widget.formKey.currentState?.saveAndValidate() ??
+          //               false) {
+          //             debugPrint(widget.formKey.currentState?.value.toString());
+          //           } else {
+          //             debugPrint(widget.formKey.currentState?.value.toString());
+          //             debugPrint('validation failed');
+          //           }
+          //         },
+          //         child: const Text(
+          //           'Submit',
+          //           style: TextStyle(color: Colors.black),
+          //         ),
+          //       ),
+          //     ),
+          //     const SizedBox(width: 20),
+          //     Expanded(
+          //       child: OutlinedButton(
+          //         onPressed: () {
+          //           widget.formKey.currentState?.reset();
+          //         },
+          //         // color: Theme.of(context).colorScheme.secondary,
+          //         child: Text(
+          //           'Reset',
+          //           style: TextStyle(
+          //               color: Theme.of(context).colorScheme.secondary),
+          //         ),
+          //       ),
+          //     ),
+          //     Expanded(
+          //       child: OutlinedButton(
+          //         onPressed: () {
+          //           Navigator.pushReplacement(
+          //             context,
+          //             MaterialPageRoute(
+          //                 builder: (context) => const SummaryPage()),
+          //           );
+          //         },
+          //         // color: Theme.of(context).colorScheme.secondary,
+          //         child: Text(
+          //           'Finish',
+          //           style: TextStyle(
+          //               color: Theme.of(context).colorScheme.secondary),
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

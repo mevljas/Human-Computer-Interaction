@@ -3,7 +3,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class GeneralForm extends StatefulWidget {
-  const GeneralForm({Key? key}) : super(key: key);
+  const GeneralForm({Key? key, required this.formKey}) : super(key: key);
+
+  final formKey;
 
   @override
   State<GeneralForm> createState() {
@@ -15,7 +17,6 @@ class _GeneralFormState extends State<GeneralForm> {
   bool autoValidate = true;
   bool readOnly = false;
   bool showSegmentedControl = true;
-  final _formKey = GlobalKey<FormBuilderState>();
   bool _pickupLocationHasError = false;
   bool _dropoffLocationHasError = false;
   final bool _pickupTimeHasError = false;
@@ -44,11 +45,11 @@ class _GeneralFormState extends State<GeneralForm> {
       child: Column(
         children: <Widget>[
           FormBuilder(
-            key: _formKey,
+            key: widget.formKey,
             // enabled: false,
             onChanged: () {
-              _formKey.currentState!.save();
-              debugPrint(_formKey.currentState!.value.toString());
+              widget.formKey.currentState!.save();
+              debugPrint(widget.formKey.currentState!.value.toString());
             },
             autovalidateMode: AutovalidateMode.disabled,
             initialValue: const {
@@ -73,7 +74,7 @@ class _GeneralFormState extends State<GeneralForm> {
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () {
-                        _formKey.currentState!.fields['pickup_time']
+                        widget.formKey.currentState!.fields['pickup_time']
                             ?.didChange(null);
                       },
                     ),
@@ -96,7 +97,7 @@ class _GeneralFormState extends State<GeneralForm> {
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () {
-                        _formKey.currentState!.fields['return_time']
+                        widget.formKey.currentState!.fields['return_time']
                             ?.didChange(null);
                       },
                     ),
@@ -104,8 +105,8 @@ class _GeneralFormState extends State<GeneralForm> {
                   initialTime: const TimeOfDay(hour: 8, minute: 0),
                   onChanged: (val) {
                     setState(() {
-                      _returnTimeHasError = !(_formKey
-                              .currentState?.fields['return_time']
+                      _returnTimeHasError = !(widget
+                              .formKey.currentState?.fields['return_time']
                               ?.validate() ??
                           false);
                     });
@@ -135,8 +136,8 @@ class _GeneralFormState extends State<GeneralForm> {
                       .toList(),
                   onChanged: (val) {
                     setState(() {
-                      _pickupLocationHasError = !(_formKey
-                              .currentState?.fields['pickup_location']
+                      _pickupLocationHasError = !(widget
+                              .formKey.currentState?.fields['pickup_location']
                               ?.validate() ??
                           false);
                     });
@@ -164,8 +165,8 @@ class _GeneralFormState extends State<GeneralForm> {
                       .toList(),
                   onChanged: (val) {
                     setState(() {
-                      _dropoffLocationHasError = !(_formKey
-                              .currentState?.fields['drop_off_location']
+                      _dropoffLocationHasError = !(widget
+                              .formKey.currentState?.fields['drop_off_location']
                               ?.validate() ??
                           false);
                     });
@@ -177,40 +178,41 @@ class _GeneralFormState extends State<GeneralForm> {
             ),
           ),
           const SizedBox(height: 50),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState?.saveAndValidate() ?? false) {
-                      debugPrint(_formKey.currentState?.value.toString());
-                    } else {
-                      debugPrint(_formKey.currentState?.value.toString());
-                      debugPrint('validation failed');
-                    }
-                  },
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () {
-                    _formKey.currentState?.reset();
-                  },
-                  // color: Theme.of(context).colorScheme.secondary,
-                  child: Text(
-                    'Reset',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   children: <Widget>[
+          //     Expanded(
+          //       child: ElevatedButton(
+          //         onPressed: () {
+          //           if (widget.formKey.currentState?.saveAndValidate() ??
+          //               false) {
+          //             debugPrint(widget.formKey.currentState?.value.toString());
+          //           } else {
+          //             debugPrint(widget.formKey.currentState?.value.toString());
+          //             debugPrint('validation failed');
+          //           }
+          //         },
+          //         child: const Text(
+          //           'Submit',
+          //           style: TextStyle(color: Colors.black),
+          //         ),
+          //       ),
+          //     ),
+          //     const SizedBox(width: 20),
+          //     Expanded(
+          //       child: OutlinedButton(
+          //         onPressed: () {
+          //           widget.formKey.currentState?.reset();
+          //         },
+          //         // color: Theme.of(context).colorScheme.secondary,
+          //         child: Text(
+          //           'Reset',
+          //           style: TextStyle(
+          //               color: Theme.of(context).colorScheme.secondary),
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

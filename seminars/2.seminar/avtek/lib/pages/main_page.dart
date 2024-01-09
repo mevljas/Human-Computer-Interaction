@@ -1,10 +1,12 @@
 import 'package:avtek/forms/car_form.dart';
+import 'package:avtek/forms/credit_card_form.dart';
 import 'package:avtek/forms/customer_form.dart';
 import 'package:avtek/forms/general_form.dart';
 import 'package:avtek/forms/partial_summary.dart';
-import 'package:avtek/forms/payment_form.dart';
 import 'package:avtek/forms/payment_type_form.dart';
+import 'package:avtek/pages/summary_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -14,7 +16,11 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int currentStep = 0;
+  int _currentStep = 0;
+  List<GlobalKey<FormBuilderState>> formKeys = [
+    for (var i = 0; i < 6; i += 1) GlobalKey<FormBuilderState>()
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,37 +34,46 @@ class _MainPageState extends State<MainPage> {
           padding: const EdgeInsets.all(20),
           child: Stepper(
             type: StepperType.horizontal,
-            currentStep: currentStep,
-            onStepCancel: () => currentStep == 0
+            currentStep: _currentStep,
+            onStepCancel: () => _currentStep == 0
                 ? null
                 : setState(() {
-                    currentStep -= 1;
+                    _currentStep -= 1;
                   }),
             onStepContinue: () {
-              bool isLastStep = (currentStep == getSteps().length - 1);
-              if (isLastStep) {
-                //Do something with this information
-              } else {
-                setState(() {
-                  currentStep += 1;
-                });
-              }
+              setState(() {
+                if (formKeys[_currentStep].currentState?.validate() ?? true) {
+                  if (_currentStep < _getSteps().length - 1) {
+                    _currentStep = _currentStep + 1;
+                  } else {
+                    _currentStep = 0;
+                    // TODO(mevljas): maybe reset?
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SummaryPage()),
+                    );
+                  }
+                }
+              });
             },
             onStepTapped: (step) => setState(() {
-              currentStep = step;
+              _currentStep = step;
             }),
-            steps: getSteps(),
+            steps: _getSteps(),
             controlsBuilder: (BuildContext context, ControlsDetails details) {
+              final isLastStep = _currentStep == _getSteps().length - 1;
               return Row(
                 children: <Widget>[
-                  TextButton(
-                    onPressed: details.onStepContinue,
-                    child: const Text('NEXT'),
-                  ),
-                  if (currentStep != 0)
+                  ElevatedButton(
+                      onPressed: details.onStepContinue,
+                      style: ElevatedButton.styleFrom(
+                          shape: const StadiumBorder()),
+                      child: Text(isLastStep ? 'Pay' : 'Next')),
+                  if (_currentStep != 0)
                     TextButton(
                       onPressed: details.onStepCancel,
-                      child: const Text('BACK'),
+                      child: const Text('Back'),
                     ),
                 ],
               );
@@ -67,10 +82,10 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  StepState getStepState(int step) {
-    if (currentStep > step) {
+  StepState _getStepState(int step) {
+    if (_currentStep > step) {
       return StepState.complete;
-    } else if (currentStep == step) {
+    } else if (_currentStep == step) {
       return StepState.editing;
     } else {
       return StepState.indexed;
@@ -78,7 +93,7 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-  List<Step> getSteps() {
+  List<Step> _getSteps() {
     return <Step>[
       // Step(
       //   state: getStepState(0),
@@ -87,40 +102,40 @@ class _MainPageState extends State<MainPage> {
       //   content: const CompleteForm(),
       // ),
       Step(
-        state: getStepState(0),
-        isActive: currentStep == 0,
+        state: _getStepState(0),
+        isActive: _currentStep == 0,
         title: const Text("General Info"),
-        content: const GeneralForm(),
+        content: GeneralForm(formKey: formKeys[0]),
       ),
       Step(
-        state: getStepState(1),
-        isActive: currentStep == 1,
+        state: _getStepState(1),
+        isActive: _currentStep == 1,
         title: const Text("Car Info"),
-        content: const CarForm(),
+        content: CarForm(formKey: formKeys[1]),
       ),
       Step(
-        state: getStepState(2),
-        isActive: currentStep == 2,
+        state: _getStepState(2),
+        isActive: _currentStep == 2,
         title: const Text("Partial Summary"),
         content: const PartialSummary(),
       ),
       Step(
-        state: getStepState(3),
-        isActive: currentStep == 3,
+        state: _getStepState(3),
+        isActive: _currentStep == 3,
         title: const Text("Customer info"),
-        content: const CustomerForm(),
+        content: CustomerForm(formKey: formKeys[3]),
       ),
       Step(
-        state: getStepState(4),
-        isActive: currentStep == 4,
-        title: const Text("Summary"),
-        content: const PaymentTypeForm(),
+        state: _getStepState(4),
+        isActive: _currentStep == 4,
+        title: const Text("Payment type"),
+        content: PaymentTypeForm(formKey: formKeys[4]),
       ),
       Step(
-        state: getStepState(5),
-        isActive: currentStep == 5,
-        title: const Text("Payment"),
-        content: const PaymentForm(),
+        state: _getStepState(5),
+        isActive: _currentStep == 5,
+        title: const Text("Credit card info"),
+        content: CreditCardForm(formKey: formKeys[5]),
       ),
     ];
   }

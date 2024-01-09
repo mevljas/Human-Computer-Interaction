@@ -3,7 +3,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class CustomerForm extends StatefulWidget {
-  const CustomerForm({Key? key}) : super(key: key);
+  const CustomerForm({Key? key, required this.formKey}) : super(key: key);
+
+  final formKey;
 
   @override
   State<CustomerForm> createState() {
@@ -15,7 +17,7 @@ class _CustomerFormState extends State<CustomerForm> {
   bool autoValidate = true;
   bool readOnly = false;
   bool showSegmentedControl = true;
-  final _formKey = GlobalKey<FormBuilderState>();
+
   bool _firstNameHasError = false;
   bool _lastNameHasError = false;
   bool _addressHasError = false;
@@ -32,11 +34,11 @@ class _CustomerFormState extends State<CustomerForm> {
       child: Column(
         children: <Widget>[
           FormBuilder(
-            key: _formKey,
+            key: widget.formKey,
             // enabled: false,
             onChanged: () {
-              _formKey.currentState!.save();
-              debugPrint(_formKey.currentState!.value.toString());
+              widget.formKey.currentState!.save();
+              debugPrint(widget.formKey.currentState!.value.toString());
             },
             autovalidateMode: AutovalidateMode.disabled,
             initialValue: const {
@@ -60,8 +62,8 @@ class _CustomerFormState extends State<CustomerForm> {
                   ),
                   onChanged: (val) {
                     setState(() {
-                      _firstNameHasError = !(_formKey
-                              .currentState?.fields['first_name']
+                      _firstNameHasError = !(widget
+                              .formKey.currentState?.fields['first_name']
                               ?.validate() ??
                           false);
                     });
@@ -69,8 +71,8 @@ class _CustomerFormState extends State<CustomerForm> {
                   // valueTransformer: (text) => num.tryParse(text),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
-                    FormBuilderValidators.numeric(),
-                    FormBuilderValidators.max(70),
+                    FormBuilderValidators.minLength(2),
+                    FormBuilderValidators.maxLength(30),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.text,
@@ -88,8 +90,8 @@ class _CustomerFormState extends State<CustomerForm> {
                   ),
                   onChanged: (val) {
                     setState(() {
-                      _lastNameHasError = !(_formKey
-                              .currentState?.fields['last_name']
+                      _lastNameHasError = !(widget
+                              .formKey.currentState?.fields['last_name']
                               ?.validate() ??
                           false);
                     });
@@ -97,8 +99,8 @@ class _CustomerFormState extends State<CustomerForm> {
                   // valueTransformer: (text) => num.tryParse(text),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
-                    FormBuilderValidators.numeric(),
-                    FormBuilderValidators.max(70),
+                    FormBuilderValidators.minLength(2),
+                    FormBuilderValidators.maxLength(30),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.text,
@@ -116,8 +118,8 @@ class _CustomerFormState extends State<CustomerForm> {
                   ),
                   onChanged: (val) {
                     setState(() {
-                      _addressHasError = !(_formKey
-                              .currentState?.fields['address']
+                      _addressHasError = !(widget
+                              .formKey.currentState?.fields['address']
                               ?.validate() ??
                           false);
                     });
@@ -125,8 +127,8 @@ class _CustomerFormState extends State<CustomerForm> {
                   // valueTransformer: (text) => num.tryParse(text),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
-                    FormBuilderValidators.numeric(),
-                    FormBuilderValidators.max(70),
+                    FormBuilderValidators.minLength(5),
+                    FormBuilderValidators.maxLength(50),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.text,
@@ -144,7 +146,8 @@ class _CustomerFormState extends State<CustomerForm> {
                   ),
                   onChanged: (val) {
                     setState(() {
-                      _emailHasError = !(_formKey.currentState?.fields['email']
+                      _emailHasError = !(widget
+                              .formKey.currentState?.fields['email']
                               ?.validate() ??
                           false);
                     });
@@ -152,8 +155,7 @@ class _CustomerFormState extends State<CustomerForm> {
                   // valueTransformer: (text) => num.tryParse(text),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
-                    FormBuilderValidators.numeric(),
-                    FormBuilderValidators.max(70),
+                    FormBuilderValidators.email()
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.text,
@@ -171,7 +173,8 @@ class _CustomerFormState extends State<CustomerForm> {
                   ),
                   onChanged: (val) {
                     setState(() {
-                      _phoneHasError = !(_formKey.currentState?.fields['phone']
+                      _phoneHasError = !(widget
+                              .formKey.currentState?.fields['phone']
                               ?.validate() ??
                           false);
                     });
@@ -180,7 +183,7 @@ class _CustomerFormState extends State<CustomerForm> {
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.numeric(),
-                    FormBuilderValidators.max(70),
+                    FormBuilderValidators.equalLength(9),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.text,
@@ -198,16 +201,18 @@ class _CustomerFormState extends State<CustomerForm> {
                   ),
                   onChanged: (val) {
                     setState(() {
-                      _ageHasError =
-                          !(_formKey.currentState?.fields['age']?.validate() ??
-                              false);
+                      _ageHasError = !(widget
+                              .formKey.currentState?.fields['age']
+                              ?.validate() ??
+                          false);
                     });
                   },
                   // valueTransformer: (text) => num.tryParse(text),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.numeric(),
-                    FormBuilderValidators.max(70),
+                    FormBuilderValidators.min(1),
+                    FormBuilderValidators.max(150),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.number,
@@ -226,8 +231,8 @@ class _CustomerFormState extends State<CustomerForm> {
                   ),
                   onChanged: (val) {
                     setState(() {
-                      _licenseAgeHasError = !(_formKey
-                              .currentState?.fields['license_age']
+                      _licenseAgeHasError = !(widget
+                              .formKey.currentState?.fields['license_age']
                               ?.validate() ??
                           false);
                     });
@@ -236,7 +241,8 @@ class _CustomerFormState extends State<CustomerForm> {
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.numeric(),
-                    FormBuilderValidators.max(70),
+                    FormBuilderValidators.min(0),
+                    FormBuilderValidators.max(130),
                   ]),
                   // initialValue: '12',
                   keyboardType: TextInputType.number,
@@ -262,40 +268,41 @@ class _CustomerFormState extends State<CustomerForm> {
               ],
             ),
           ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState?.saveAndValidate() ?? false) {
-                      debugPrint(_formKey.currentState?.value.toString());
-                    } else {
-                      debugPrint(_formKey.currentState?.value.toString());
-                      debugPrint('validation failed');
-                    }
-                  },
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () {
-                    _formKey.currentState?.reset();
-                  },
-                  // color: Theme.of(context).colorScheme.secondary,
-                  child: Text(
-                    'Reset',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   children: <Widget>[
+          //     Expanded(
+          //       child: ElevatedButton(
+          //         onPressed: () {
+          //           if (widget.formKey.currentState?.saveAndValidate() ??
+          //               false) {
+          //             debugPrint(widget.formKey.currentState?.value.toString());
+          //           } else {
+          //             debugPrint(widget.formKey.currentState?.value.toString());
+          //             debugPrint('validation failed');
+          //           }
+          //         },
+          //         child: const Text(
+          //           'Submit',
+          //           style: TextStyle(color: Colors.white),
+          //         ),
+          //       ),
+          //     ),
+          //     const SizedBox(width: 20),2232
+          //     Expanded(
+          //       child: OutlinedButton(
+          //         onPressed: () {
+          //           widget.formKey.currentState?.reset();
+          //         },
+          //         // color: Theme.of(context).colorScheme.secondary,
+          //         child: Text(
+          //           'Reset',
+          //           style: TextStyle(
+          //               color: Theme.of(context).colorScheme.secondary),
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );
