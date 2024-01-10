@@ -212,7 +212,7 @@ class _CarFormState extends State<CarForm> {
                       .toList(),
                   onChanged: (val) {
                     final field = widget.formKey.currentState?.fields['car'];
-                    if (field?.isTouched == true) {
+                    if (val != null && (field?.hasInteractedByUser ?? false)) {
                       setState(() {
                         _carHasError = !(field?.validate() ?? false);
                       });

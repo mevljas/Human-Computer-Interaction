@@ -1,10 +1,26 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 
 class PartialSummary extends StatelessWidget {
-  const PartialSummary({super.key});
+  PartialSummary({super.key, required this.formKeys});
+
+  final List<GlobalKey<FormBuilderState>> formKeys;
+
+  Random random = Random();
 
   @override
   Widget build(BuildContext context) {
+    final dateFormat = DateFormat('dd/MM/yyyy hh:mm');
+    final pricePerHour = random.nextInt(20) + 5;
+
+    final pickupTime = formKeys[0].currentState?.fields['pickup_time']?.value ??
+        DateTime.now();
+    final returnTime = formKeys[0].currentState?.fields['return_time']?.value ??
+        DateTime.now();
+
     return Column(
       children: [
         Row(
@@ -48,31 +64,36 @@ class PartialSummary extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Ljubljana',
+                  formKeys[0].currentState?.fields['pickup_location']?.value ??
+                      '',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  'Maribor',
+                  formKeys[0]
+                          .currentState
+                          ?.fields['drop_off_location']
+                          ?.value ??
+                      '',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '12:00',
+                  dateFormat.format((pickupTime ?? DateTime.now()) as DateTime),
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '14:00',
+                  dateFormat.format((returnTime ?? DateTime.now()) as DateTime),
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  'BMW',
+                  formKeys[1].currentState?.fields['car']?.value ?? '',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '50€',
+                  '$pricePerHour €',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '100€',
+                  '${((returnTime as DateTime).difference((pickupTime as DateTime))).inHours * pricePerHour} €',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],

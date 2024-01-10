@@ -37,11 +37,21 @@ class _MainPageState extends State<MainPage> {
           child: Stepper(
             type: StepperType.horizontal,
             currentStep: _currentStep,
-            onStepCancel: () => _currentStep == 0
-                ? null
-                : setState(() {
-                    _currentStep -= 1;
-                  }),
+            onStepCancel: () {
+              if (_currentStep == 6 &&
+                  formKeys[4].currentState?.fields['payment_type']!.value ==
+                      'Cash') {
+                setState(() {
+                  _currentStep -= 2;
+                });
+              } else {
+                _currentStep == 0
+                    ? null
+                    : setState(() {
+                        _currentStep -= 1;
+                      });
+              }
+            },
             onStepContinue: () {
               setState(() {
                 if (formKeys[_currentStep].currentState?.validate() ?? true) {
@@ -97,7 +107,11 @@ class _MainPageState extends State<MainPage> {
   StepState _getStepState(int step) {
     // final stepState = formKeys[step].currentState;
     // final currentState = formKeys[_currentStep].currentState;
-    if (_currentStep > step) {
+    if (step == 5 &&
+        _currentStep == 6 &&
+        formKeys[4].currentState?.fields['payment_type']!.value == 'Cash') {
+      return StepState.disabled;
+    } else if (_currentStep > step) {
       return StepState.complete;
     } else if (_currentStep == step) {
       return StepState.editing;
@@ -131,7 +145,7 @@ class _MainPageState extends State<MainPage> {
         state: _getStepState(2),
         isActive: _currentStep == 2,
         title: const Text("Partial Summary"),
-        content: const PartialSummary(),
+        content: PartialSummary(formKeys: formKeys),
       ),
       Step(
         state: _getStepState(3),
@@ -155,7 +169,7 @@ class _MainPageState extends State<MainPage> {
         state: _getStepState(6),
         isActive: _currentStep == 6,
         title: const Text("Summary"),
-        content: const Summary(),
+        content: Summary(formKeys: formKeys),
       ),
     ];
   }

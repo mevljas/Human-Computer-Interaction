@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:intl/intl.dart';
 
 class GeneralForm extends StatefulWidget {
   const GeneralForm({Key? key, required this.formKey}) : super(key: key);
@@ -21,6 +22,7 @@ class _GeneralFormState extends State<GeneralForm> {
   bool _dropoffLocationHasError = false;
   bool _pickupTimeHasError = false;
   bool _returnTimeHasError = false;
+  DateTime firstReturnTime = DateTime.now();
 
   var locationOptions = [
     'Ljubljana',
@@ -61,6 +63,7 @@ class _GeneralFormState extends State<GeneralForm> {
                   initialDate: DateTime.now(),
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2025, 1, 1),
+                  format: DateFormat('dd/MM/yyyy hh:mm'),
                   inputType: InputType.both,
                   decoration: InputDecoration(
                     labelText: 'Pickup Time',
@@ -74,11 +77,20 @@ class _GeneralFormState extends State<GeneralForm> {
                   ),
                   initialTime: const TimeOfDay(hour: 8, minute: 0),
                   onChanged: (val) {
+                    final isValid = widget
+                            .formKey.currentState?.fields['pickup_time']
+                            ?.validate() ??
+                        false;
+
+                    if (isValid) {
+                      firstReturnTime = val!.add(const Duration(days: 1));
+
+                      widget.formKey.currentState!.fields['return_time']
+                          ?.reset();
+                    }
+
                     setState(() {
-                      _pickupTimeHasError = !(widget
-                              .formKey.currentState?.fields['pickup_time']
-                              ?.validate() ??
-                          false);
+                      _pickupTimeHasError = !isValid;
                     });
                   },
                   validator: FormBuilderValidators.compose(
@@ -89,9 +101,10 @@ class _GeneralFormState extends State<GeneralForm> {
                 FormBuilderDateTimePicker(
                   name: 'return_time',
                   initialEntryMode: DatePickerEntryMode.calendarOnly,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
+                  initialDate: firstReturnTime,
+                  firstDate: firstReturnTime,
                   lastDate: DateTime(2025, 1, 1),
+                  format: DateFormat('dd/MM/yyyy hh:mm'),
                   inputType: InputType.both,
                   decoration: InputDecoration(
                     labelText: 'Return Time',
@@ -105,12 +118,13 @@ class _GeneralFormState extends State<GeneralForm> {
                   ),
                   initialTime: const TimeOfDay(hour: 8, minute: 0),
                   onChanged: (val) {
-                    setState(() {
-                      _returnTimeHasError = !(widget
-                              .formKey.currentState?.fields['return_time']
-                              ?.validate() ??
-                          false);
-                    });
+                    final field =
+                        widget.formKey.currentState?.fields['return_time'];
+                    if (val != null && (field?.hasInteractedByUser ?? false)) {
+                      setState(() {
+                        _returnTimeHasError = field?.validate() ?? false;
+                      });
+                    }
                   },
                   validator: FormBuilderValidators.compose(
                       [FormBuilderValidators.required()]),
