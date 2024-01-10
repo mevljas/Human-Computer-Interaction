@@ -5,7 +5,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 class PaymentTypeForm extends StatefulWidget {
   const PaymentTypeForm({Key? key, required this.formKey}) : super(key: key);
 
-  final formKey;
+  final GlobalKey<FormBuilderState> formKey;
 
   @override
   State<PaymentTypeForm> createState() {

@@ -5,7 +5,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 class GeneralForm extends StatefulWidget {
   const GeneralForm({Key? key, required this.formKey}) : super(key: key);
 
-  final formKey;
+  final GlobalKey<FormBuilderState> formKey;
 
   @override
   State<GeneralForm> createState() {
@@ -52,13 +52,6 @@ class _GeneralFormState extends State<GeneralForm> {
               debugPrint(widget.formKey.currentState!.value.toString());
             },
             autovalidateMode: AutovalidateMode.disabled,
-            initialValue: const {
-              'movie_rating': 5,
-              'best_language': 'Dart',
-              'age': '13',
-              'gender': 'Male',
-              'languages_filter': ['Dart']
-            },
             skipDisabled: true,
             child: Column(
               children: <Widget>[

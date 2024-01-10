@@ -45,7 +45,14 @@ class _MainPageState extends State<MainPage> {
             onStepContinue: () {
               setState(() {
                 if (formKeys[_currentStep].currentState?.validate() ?? true) {
-                  if (_currentStep < _getSteps().length - 1) {
+                  if (_currentStep == 4 &&
+                      formKeys[_currentStep]
+                              .currentState
+                              ?.fields['payment_type']!
+                              .value ==
+                          'Cash') {
+                    _currentStep = _currentStep + 2;
+                  } else if (_currentStep < _getSteps().length - 1) {
                     _currentStep = _currentStep + 1;
                   } else {
                     _currentStep = 0;
@@ -74,7 +81,7 @@ class _MainPageState extends State<MainPage> {
                       onPressed: details.onStepContinue,
                       style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder()),
-                      child: Text(isLastStep ? 'Pay' : 'Next')),
+                      child: Text(isLastStep ? 'Submit order' : 'Next')),
                   if (_currentStep != 0)
                     TextButton(
                       onPressed: details.onStepCancel,

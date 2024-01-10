@@ -1,3 +1,5 @@
+import 'package:avtek/menu/menu_bar_wrapper.dart';
+import 'package:avtek/pages/main_page.dart';
 import 'package:flutter/material.dart';
 
 class OrderCompletedPage extends StatefulWidget {
@@ -103,7 +105,14 @@ class _OrderCompletedPageState extends State<OrderCompletedPage> {
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/home');
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MenuBarWrapper(
+                      child: MainPage(),
+                    ),
+                  ),
+                );
               },
               child: const Text(
                 'New order',

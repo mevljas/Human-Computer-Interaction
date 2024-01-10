@@ -10,7 +10,7 @@ class CarForm extends StatefulWidget {
     return _CarFormState();
   }
 
-  final formKey;
+  final GlobalKey<FormBuilderState> formKey;
 }
 
 class _CarFormState extends State<CarForm> {
@@ -72,6 +72,8 @@ class _CarFormState extends State<CarForm> {
     'Diesel',
   ];
 
+  List<String> filteredCars = [];
+
   void _onChanged(dynamic val) => debugPrint(val.toString());
 
   @override
@@ -87,13 +89,6 @@ class _CarFormState extends State<CarForm> {
               debugPrint(widget.formKey.currentState!.value.toString());
             },
             autovalidateMode: AutovalidateMode.disabled,
-            initialValue: const {
-              'movie_rating': 5,
-              'best_language': 'Dart',
-              'age': '13',
-              'gender': 'Male',
-              'languages_filter': ['Dart']
-            },
             skipDisabled: true,
             child: Column(
               children: <Widget>[
@@ -121,6 +116,19 @@ class _CarFormState extends State<CarForm> {
                               .formKey.currentState?.fields['car_size']
                               ?.validate() ??
                           false);
+                      if (!_carSizeHasError) {
+                        widget.formKey.currentState?.fields['car']?.reset();
+                        if (val == 'Small') {
+                          filteredCars.clear();
+                          filteredCars.addAll(smallCars);
+                        } else if (val == 'Medium') {
+                          filteredCars.clear();
+                          filteredCars.addAll(mediumCars);
+                        } else if (val == 'Large') {
+                          filteredCars.clear();
+                          filteredCars.addAll(bigCars);
+                        }
+                      }
                     });
                   },
                   valueTransformer: (val) => val?.toString(),
@@ -187,7 +195,7 @@ class _CarFormState extends State<CarForm> {
                 FormBuilderDropdown<String>(
                   name: 'car',
                   decoration: InputDecoration(
-                    labelText: 'Car size',
+                    labelText: 'Car model',
                     suffix: _carHasError
                         ? const Icon(Icons.error)
                         : const Icon(Icons.check),
@@ -195,20 +203,20 @@ class _CarFormState extends State<CarForm> {
                   ),
                   validator: FormBuilderValidators.compose(
                       [FormBuilderValidators.required()]),
-                  items: mediumCars
-                      .map((location) => DropdownMenuItem(
+                  items: filteredCars
+                      .map((car) => DropdownMenuItem(
                             alignment: AlignmentDirectional.center,
-                            value: location,
-                            child: Text(location),
+                            value: car,
+                            child: Text(car),
                           ))
                       .toList(),
                   onChanged: (val) {
-                    setState(() {
-                      _carHasError = !(widget
-                              .formKey.currentState?.fields['car']
-                              ?.validate() ??
-                          false);
-                    });
+                    final field = widget.formKey.currentState?.fields['car'];
+                    if (field?.isTouched == true) {
+                      setState(() {
+                        _carHasError = !(field?.validate() ?? false);
+                      });
+                    }
                   },
                   valueTransformer: (val) => val?.toString(),
                 ),

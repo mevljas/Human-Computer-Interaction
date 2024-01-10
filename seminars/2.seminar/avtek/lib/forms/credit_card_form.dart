@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class CreditCardForm extends StatefulWidget {
   const CreditCardForm({Key? key, required this.formKey}) : super(key: key);
 
-  final formKey;
+  final GlobalKey<FormBuilderState> formKey;
 
   @override
   State<CreditCardForm> createState() {

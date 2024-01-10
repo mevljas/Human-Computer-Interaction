@@ -5,7 +5,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 class CustomerForm extends StatefulWidget {
   const CustomerForm({Key? key, required this.formKey}) : super(key: key);
 
-  final formKey;
+  final GlobalKey<FormBuilderState> formKey;
 
   @override
   State<CustomerForm> createState() {
@@ -185,7 +185,7 @@ class _CustomerFormState extends State<CustomerForm> {
                   autovalidateMode: AutovalidateMode.disabled,
                   name: 'age',
                   decoration: InputDecoration(
-                    labelText: 'Age',
+                    labelText: 'Age in years',
                     suffixIcon: _ageHasError
                         ? const Icon(Icons.error, color: Colors.red)
                         : const Icon(Icons.check, color: Colors.green),
@@ -202,7 +202,7 @@ class _CustomerFormState extends State<CustomerForm> {
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.numeric(),
-                    FormBuilderValidators.min(0),
+                    FormBuilderValidators.min(18),
                     FormBuilderValidators.max(150),
                   ]),
                   // initialValue: '12',
@@ -210,12 +210,11 @@ class _CustomerFormState extends State<CustomerForm> {
                   textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(height: 15),
-                // TODO(mevljas): use a more appropriate widget.
                 FormBuilderTextField(
                   autovalidateMode: AutovalidateMode.disabled,
                   name: 'license_age',
                   decoration: InputDecoration(
-                    labelText: 'License age',
+                    labelText: 'For how many years have you had your license?',
                     suffixIcon: _licenseAgeHasError
                         ? const Icon(Icons.error, color: Colors.red)
                         : const Icon(Icons.check, color: Colors.green),
@@ -248,7 +247,7 @@ class _CustomerFormState extends State<CustomerForm> {
                     text: const TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Would you like car insurance ',
+                          text: 'Would you like car insurance?',
                           style: TextStyle(color: Colors.black),
                         ),
                       ],
