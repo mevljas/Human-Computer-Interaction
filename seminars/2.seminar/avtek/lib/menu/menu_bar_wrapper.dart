@@ -21,8 +21,10 @@ class MenuBarWrapper extends StatelessWidget {
                         onPressed: () {
                           showAboutDialog(
                             context: context,
-                            applicationName: 'MenuBar Sample',
+                            applicationName: 'Avtek',
                             applicationVersion: '1.0.0',
+                            applicationIcon: Image.asset('assets/car.png',
+                                width: 50, height: 50),
                           );
                         },
                         child: const MenuAcceleratorLabel('&About'),
