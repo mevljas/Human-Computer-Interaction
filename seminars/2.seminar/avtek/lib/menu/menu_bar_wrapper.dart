@@ -37,15 +37,24 @@ class MenuBarWrapper extends StatelessWidget {
                         child: const MenuAcceleratorLabel('&About'),
                       ),
                       MenuItemButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MenuBarWrapper(
-                                child: MainPage(),
+                        onPressed: () async {
+                          if (await showOkCancelAlertDialog(
+                                context: context,
+                                title: 'Confirm',
+                                message: 'Would you like to reset the inputs?',
+                                okLabel: 'Yes',
+                                cancelLabel: 'No',
+                              ) ==
+                              OkCancelResult.ok) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const MenuBarWrapper(
+                                  child: MainPage(),
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          }
                         },
                         child: const MenuAcceleratorLabel('&Reset'),
                       ),
@@ -76,7 +85,7 @@ class MenuBarWrapper extends StatelessWidget {
                               context: context,
                               title: 'Instructions',
                               message:
-                                  '1. Fill in the form\n2. Click on the next button\n3. Repeat until you reach the last page\n4. Click on the finish button');
+                                  '1. Fill in the form\n2. Click on the next button\n3. Repeat until you reach the last page\n4. Click on the submit button');
                         },
                         child: const MenuAcceleratorLabel('&Instructions'),
                       ),

@@ -19,7 +19,7 @@ class _GeneralFormState extends State<GeneralForm> {
   bool readOnly = false;
   bool showSegmentedControl = true;
   bool _pickupLocationHasError = false;
-  bool _dropoffLocationHasError = false;
+  bool _dropOffLocationHasError = false;
   bool _pickupTimeHasError = false;
   bool _returnTimeHasError = false;
   DateTime firstReturnTime = DateTime.now();
@@ -55,179 +55,146 @@ class _GeneralFormState extends State<GeneralForm> {
             },
             autovalidateMode: AutovalidateMode.disabled,
             skipDisabled: true,
-            child: Column(
-              children: <Widget>[
-                FormBuilderDateTimePicker(
-                  name: 'pickup_time',
-                  initialEntryMode: DatePickerEntryMode.calendarOnly,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2025, 1, 1),
-                  format: DateFormat('dd/MM/yyyy hh:mm'),
-                  inputType: InputType.both,
-                  decoration: InputDecoration(
-                    labelText: 'Pickup Time',
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        widget.formKey.currentState!.fields['pickup_time']
-                            ?.didChange(null);
-                      },
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 500.0),
+              child: Column(
+                children: <Widget>[
+                  FormBuilderDateTimePicker(
+                    name: 'pickup_time',
+                    initialEntryMode: DatePickerEntryMode.calendarOnly,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2025, 1, 1),
+                    format: DateFormat('dd/MM/yyyy hh:mm'),
+                    inputType: InputType.both,
+                    decoration: InputDecoration(
+                      labelText: 'Pickup Time',
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          widget.formKey.currentState!.fields['pickup_time']
+                              ?.didChange(null);
+                        },
+                      ),
                     ),
-                  ),
-                  initialTime: const TimeOfDay(hour: 8, minute: 0),
-                  onChanged: (val) {
-                    final isValid = widget
-                            .formKey.currentState?.fields['pickup_time']
-                            ?.validate() ??
-                        false;
+                    initialTime: const TimeOfDay(hour: 8, minute: 0),
+                    onChanged: (val) {
+                      final isValid = widget
+                              .formKey.currentState?.fields['pickup_time']
+                              ?.validate() ??
+                          false;
 
-                    if (isValid) {
-                      firstReturnTime = val!.add(const Duration(days: 1));
+                      if (isValid) {
+                        firstReturnTime = val!.add(const Duration(days: 1));
 
-                      widget.formKey.currentState!.fields['return_time']
-                          ?.reset();
-                    }
-
-                    setState(() {
-                      _pickupTimeHasError = !isValid;
-                    });
-                  },
-                  validator: FormBuilderValidators.compose(
-                      [FormBuilderValidators.required()]),
-                  // locale: const Locale.fromSubtags(languageCode: 'fr'),
-                ),
-                const SizedBox(height: 20),
-                FormBuilderDateTimePicker(
-                  name: 'return_time',
-                  initialEntryMode: DatePickerEntryMode.calendarOnly,
-                  initialDate: firstReturnTime,
-                  firstDate: firstReturnTime,
-                  lastDate: DateTime(2025, 1, 1),
-                  format: DateFormat('dd/MM/yyyy hh:mm'),
-                  inputType: InputType.both,
-                  decoration: InputDecoration(
-                    labelText: 'Return Time',
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
                         widget.formKey.currentState!.fields['return_time']
-                            ?.didChange(null);
-                      },
-                    ),
-                  ),
-                  initialTime: const TimeOfDay(hour: 8, minute: 0),
-                  onChanged: (val) {
-                    final field =
-                        widget.formKey.currentState?.fields['return_time'];
-                    if (val != null && (field?.hasInteractedByUser ?? false)) {
+                            ?.reset();
+                      }
+
                       setState(() {
-                        _returnTimeHasError = field?.validate() ?? false;
+                        _pickupTimeHasError = !isValid;
                       });
-                    }
-                  },
-                  validator: FormBuilderValidators.compose(
-                      [FormBuilderValidators.required()]),
-                  // locale: const Locale.fromSubtags(languageCode: 'fr'),
-                ),
-                const SizedBox(height: 20),
-                FormBuilderDropdown<String>(
-                  name: 'pickup_location',
-                  decoration: InputDecoration(
-                    labelText: 'Pickup location',
-                    suffix: _pickupLocationHasError
-                        ? const Icon(Icons.error)
-                        : const Icon(Icons.check),
-                    hintText: 'Select your pickup location',
+                    },
+                    validator: FormBuilderValidators.compose(
+                        [FormBuilderValidators.required()]),
                   ),
-                  validator: FormBuilderValidators.compose(
-                      [FormBuilderValidators.required()]),
-                  items: locationOptions
-                      .map((location) => DropdownMenuItem(
-                            alignment: AlignmentDirectional.center,
-                            value: location,
-                            child: Text(location),
-                          ))
-                      .toList(),
-                  onChanged: (val) {
-                    setState(() {
-                      _pickupLocationHasError = !(widget
-                              .formKey.currentState?.fields['pickup_location']
-                              ?.validate() ??
-                          false);
-                    });
-                  },
-                  valueTransformer: (val) => val?.toString(),
-                ),
-                const SizedBox(height: 20),
-                FormBuilderDropdown<String>(
-                  name: 'drop_off_location',
-                  decoration: InputDecoration(
-                    labelText: 'Drop off location',
-                    suffix: _dropoffLocationHasError
-                        ? const Icon(Icons.error)
-                        : const Icon(Icons.check),
-                    hintText: 'Select your drop off location',
+                  const SizedBox(height: 20),
+                  FormBuilderDateTimePicker(
+                    name: 'return_time',
+                    initialEntryMode: DatePickerEntryMode.calendarOnly,
+                    initialDate: firstReturnTime,
+                    firstDate: firstReturnTime,
+                    lastDate: DateTime(2025, 1, 1),
+                    format: DateFormat('dd/MM/yyyy hh:mm'),
+                    inputType: InputType.both,
+                    decoration: InputDecoration(
+                      labelText: 'Return Time',
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          widget.formKey.currentState!.fields['return_time']
+                              ?.didChange(null);
+                        },
+                      ),
+                    ),
+                    initialTime: const TimeOfDay(hour: 8, minute: 0),
+                    onChanged: (val) {
+                      final field =
+                          widget.formKey.currentState?.fields['return_time'];
+                      if (val != null &&
+                          (field?.hasInteractedByUser ?? false)) {
+                        setState(() {
+                          _returnTimeHasError = field?.validate() ?? false;
+                        });
+                      }
+                    },
+                    validator: FormBuilderValidators.compose(
+                        [FormBuilderValidators.required()]),
                   ),
-                  validator: FormBuilderValidators.compose(
-                      [FormBuilderValidators.required()]),
-                  items: locationOptions
-                      .map((location) => DropdownMenuItem(
-                            alignment: AlignmentDirectional.center,
-                            value: location,
-                            child: Text(location),
-                          ))
-                      .toList(),
-                  onChanged: (val) {
-                    setState(() {
-                      _dropoffLocationHasError = !(widget
-                              .formKey.currentState?.fields['drop_off_location']
-                              ?.validate() ??
-                          false);
-                    });
-                  },
-                  valueTransformer: (val) => val?.toString(),
-                ),
-                const SizedBox(height: 20),
-              ],
+                  const SizedBox(height: 20),
+                  FormBuilderDropdown<String>(
+                    name: 'pickup_location',
+                    decoration: InputDecoration(
+                      labelText: 'Pickup location',
+                      suffix: _pickupLocationHasError
+                          ? const Icon(Icons.error)
+                          : const Icon(Icons.check),
+                      hintText: 'Select your pickup location',
+                    ),
+                    validator: FormBuilderValidators.compose(
+                        [FormBuilderValidators.required()]),
+                    items: locationOptions
+                        .map((location) => DropdownMenuItem(
+                              alignment: AlignmentDirectional.center,
+                              value: location,
+                              child: Text(location),
+                            ))
+                        .toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        _pickupLocationHasError = !(widget
+                                .formKey.currentState?.fields['pickup_location']
+                                ?.validate() ??
+                            false);
+                      });
+                    },
+                    valueTransformer: (val) => val?.toString(),
+                  ),
+                  const SizedBox(height: 20),
+                  FormBuilderDropdown<String>(
+                    name: 'drop_off_location',
+                    decoration: InputDecoration(
+                      labelText: 'Drop off location',
+                      suffix: _dropOffLocationHasError
+                          ? const Icon(Icons.error)
+                          : const Icon(Icons.check),
+                      hintText: 'Select your drop off location',
+                    ),
+                    validator: FormBuilderValidators.compose(
+                        [FormBuilderValidators.required()]),
+                    items: locationOptions
+                        .map((location) => DropdownMenuItem(
+                              alignment: AlignmentDirectional.center,
+                              value: location,
+                              child: Text(location),
+                            ))
+                        .toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        _dropOffLocationHasError = !(widget.formKey.currentState
+                                ?.fields['drop_off_location']
+                                ?.validate() ??
+                            false);
+                      });
+                    },
+                    valueTransformer: (val) => val?.toString(),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 50),
-          // Row(
-          //   children: <Widget>[
-          //     Expanded(
-          //       child: ElevatedButton(
-          //         onPressed: () {
-          //           if (widget.formKey.currentState?.saveAndValidate() ??
-          //               false) {
-          //             debugPrint(widget.formKey.currentState?.value.toString());
-          //           } else {
-          //             debugPrint(widget.formKey.currentState?.value.toString());
-          //             debugPrint('validation failed');
-          //           }
-          //         },
-          //         child: const Text(
-          //           'Submit',
-          //           style: TextStyle(color: Colors.black),
-          //         ),
-          //       ),
-          //     ),
-          //     const SizedBox(width: 20),
-          //     Expanded(
-          //       child: OutlinedButton(
-          //         onPressed: () {
-          //           widget.formKey.currentState?.reset();
-          //         },
-          //         // color: Theme.of(context).colorScheme.secondary,
-          //         child: Text(
-          //           'Reset',
-          //           style: TextStyle(
-          //               color: Theme.of(context).colorScheme.secondary),
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );

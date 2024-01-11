@@ -41,285 +41,293 @@ class _OrderCompletedPageState extends State<OrderCompletedPage> {
       ),
       body: Container(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Text(
-              'Order completed',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(width: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'General info',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    Text(
-                      'Pickup location',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Drop off location',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Pickup time',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Drop off time',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Car info',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    Text(
-                      'Transmission type',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Engine type',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Car',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Price per day',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Customer info',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    Text(
-                      'Customer',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Address',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Email',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Phone',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Age',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Had license for',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Insurance',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Payment',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    Text(
-                      'Total price',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Payment type',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    if (paymentType == 'Credit card') ...[
-                      Text(
-                        'Credit card number',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      Text(
-                        'Expiration date',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      Text(
-                        'CCV',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ]
-                  ],
-                ),
-                const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('', style: Theme.of(context).textTheme.titleLarge),
-                    Text(
-                      widget.formKeys[0].currentState?.fields['pickup_location']
-                              ?.value ??
-                          '',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      widget.formKeys[0].currentState
-                              ?.fields['drop_off_location']?.value ??
-                          '',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      dateFormat
-                          .format((pickupTime ?? DateTime.now()) as DateTime),
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      dateFormat
-                          .format((returnTime ?? DateTime.now()) as DateTime),
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text('', style: Theme.of(context).textTheme.titleLarge),
-                    Text(
-                      widget.formKeys[1].currentState
-                              ?.fields['transmission_type']?.value ??
-                          '',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      widget.formKeys[1].currentState?.fields['engine_type']
-                              ?.value ??
-                          '',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      widget.formKeys[1].currentState?.fields['car']?.value ??
-                          '',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      '${PartialSummary.pricePerHour} €',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text('', style: Theme.of(context).textTheme.titleLarge),
-                    Text(
-                      (widget.formKeys[3].currentState?.fields['first_name']
-                                  ?.value ??
-                              '') +
-                          (widget.formKeys[3].currentState?.fields['last_name']
-                                  ?.value ??
-                              ''),
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      widget.formKeys[3].currentState?.fields['address']
-                              ?.value ??
-                          '',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      widget.formKeys[3].currentState?.fields['email']?.value ??
-                          '',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      widget.formKeys[3].currentState?.fields['phone']?.value ??
-                          '',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      widget.formKeys[3].currentState?.fields['age']?.value ??
-                          '',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      (widget.formKeys[3].currentState?.fields['license_age']
-                                  ?.value ??
-                              '') +
-                          ' years',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      (widget.formKeys[3].currentState
-                                  ?.fields['accept_insurance']?.value ??
-                              false)
-                          ? '✅'
-                          : '❌',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text('', style: Theme.of(context).textTheme.titleLarge),
-                    Text(
-                      '${PaymentTypeForm.finalPrice} €',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      paymentType,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    if (paymentType == 'Credit card') ...[
-                      Text(
-                        widget.formKeys[5].currentState?.fields['number']
-                                ?.value ??
-                            '',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      Text(
-                        creditCardDateFormat.format((widget
-                                .formKeys[5]
-                                .currentState
-                                ?.fields['expiration_date']
-                                ?.value ??
-                            DateTime.now()) as DateTime),
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      Text(
-                        widget.formKeys[5].currentState?.fields['ccv']?.value ??
-                            '',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ]
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 50),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MenuBarWrapper(
-                      child: MainPage(),
-                    ),
-                  ),
-                );
-              },
-              child: const Text(
-                'New order',
-                style: TextStyle(color: Colors.black),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                'Order completed',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(fontSize: 40),
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'General info',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      Text(
+                        'Pickup location',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Drop off location',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Pickup time',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Drop off time',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Car info',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      Text(
+                        'Transmission type',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Engine type',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Car',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Price per day',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Customer info',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      Text(
+                        'Customer',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Address',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Email',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Phone',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Age',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Had license for',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Insurance',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Payment',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      Text(
+                        'Total price',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        'Payment type',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      if (paymentType == 'Credit card') ...[
+                        Text(
+                          'Credit card number',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Text(
+                          'Expiration date',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Text(
+                          'CCV',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ]
+                    ],
+                  ),
+                  const SizedBox(width: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('', style: Theme.of(context).textTheme.titleLarge),
+                      Text(
+                        widget.formKeys[0].currentState
+                                ?.fields['pickup_location']?.value ??
+                            '',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        widget.formKeys[0].currentState
+                                ?.fields['drop_off_location']?.value ??
+                            '',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        dateFormat
+                            .format((pickupTime ?? DateTime.now()) as DateTime),
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        dateFormat
+                            .format((returnTime ?? DateTime.now()) as DateTime),
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text('', style: Theme.of(context).textTheme.titleLarge),
+                      Text(
+                        widget.formKeys[1].currentState
+                                ?.fields['transmission_type']?.value ??
+                            '',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        widget.formKeys[1].currentState?.fields['engine_type']
+                                ?.value ??
+                            '',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        widget.formKeys[1].currentState?.fields['car']?.value ??
+                            '',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        '${PartialSummary.pricePerHour} €',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text('', style: Theme.of(context).textTheme.titleLarge),
+                      Text(
+                        (widget.formKeys[3].currentState?.fields['first_name']
+                                    ?.value ??
+                                '') +
+                            (widget.formKeys[3].currentState
+                                    ?.fields['last_name']?.value ??
+                                ''),
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        widget.formKeys[3].currentState?.fields['address']
+                                ?.value ??
+                            '',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        widget.formKeys[3].currentState?.fields['email']
+                                ?.value ??
+                            '',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        widget.formKeys[3].currentState?.fields['phone']
+                                ?.value ??
+                            '',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        widget.formKeys[3].currentState?.fields['age']?.value ??
+                            '',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        (widget.formKeys[3].currentState?.fields['license_age']
+                                    ?.value ??
+                                '') +
+                            ' years',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        (widget.formKeys[3].currentState
+                                    ?.fields['accept_insurance']?.value ??
+                                false)
+                            ? '✅'
+                            : '❌',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text('', style: Theme.of(context).textTheme.titleLarge),
+                      Text(
+                        '${PaymentTypeForm.finalPrice} €',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        paymentType,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      if (paymentType == 'Credit card') ...[
+                        Text(
+                          widget.formKeys[5].currentState?.fields['number']
+                                  ?.value ??
+                              '',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        Text(
+                          creditCardDateFormat.format((widget
+                                  .formKeys[5]
+                                  .currentState
+                                  ?.fields['expiration_date']
+                                  ?.value ??
+                              DateTime.now()) as DateTime),
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        Text(
+                          widget.formKeys[5].currentState?.fields['ccv']
+                                  ?.value ??
+                              '',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ]
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 50),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuBarWrapper(
+                        child: MainPage(),
+                      ),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'New order',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -29,11 +29,11 @@ class _PaymentTypeFormState extends State<PaymentTypeForm> {
 
   @override
   Widget build(BuildContext context) {
-    final bool CarInsurance =
+    final bool carInsurance =
         widget.formKeys[3].currentState?.fields['accept_insurance']?.value ??
             false;
 
-    PaymentTypeForm.finalPrice = CarInsurance
+    PaymentTypeForm.finalPrice = carInsurance
         ? (PartialSummary.totalPrice! +
             (PartialSummary.hours! / 24 * 2).toInt())
         : PartialSummary.totalPrice;
@@ -43,107 +43,74 @@ class _PaymentTypeFormState extends State<PaymentTypeForm> {
         children: <Widget>[
           FormBuilder(
             key: widget.formKey,
-            // enabled: false,
             onChanged: () {
               widget.formKey.currentState!.save();
               debugPrint(widget.formKey.currentState!.value.toString());
             },
             autovalidateMode: AutovalidateMode.disabled,
             skipDisabled: true,
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Total price',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${PaymentTypeForm.finalPrice} €',
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(height: 20),
-                FormBuilderDropdown<String>(
-                  name: 'payment_type',
-                  decoration: InputDecoration(
-                    labelText: 'Payment type',
-                    suffix: _paymentTypeHasError
-                        ? const Icon(Icons.error)
-                        : const Icon(Icons.check),
-                    hintText: 'Select your preferred payment type',
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 500.0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Total price',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${PaymentTypeForm.finalPrice} €',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                  validator: FormBuilderValidators.compose(
-                      [FormBuilderValidators.required()]),
-                  items: paymentTypeOptions
-                      .map((location) => DropdownMenuItem(
-                            alignment: AlignmentDirectional.center,
-                            value: location,
-                            child: Text(location),
-                          ))
-                      .toList(),
-                  onChanged: (val) {
-                    setState(() {
-                      _paymentTypeHasError = !(widget
-                              .formKey.currentState?.fields['payment_type']
-                              ?.validate() ??
-                          false);
-                    });
-                  },
-                  valueTransformer: (val) => val?.toString(),
-                ),
-                const SizedBox(height: 20),
-              ],
+                  const SizedBox(height: 20),
+                  FormBuilderDropdown<String>(
+                    name: 'payment_type',
+                    decoration: InputDecoration(
+                      labelText: 'Payment type',
+                      suffix: _paymentTypeHasError
+                          ? const Icon(Icons.error)
+                          : const Icon(Icons.check),
+                      hintText: 'Select your preferred payment type',
+                    ),
+                    validator: FormBuilderValidators.compose(
+                        [FormBuilderValidators.required()]),
+                    items: paymentTypeOptions
+                        .map((location) => DropdownMenuItem(
+                              alignment: AlignmentDirectional.center,
+                              value: location,
+                              child: Text(location),
+                            ))
+                        .toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        _paymentTypeHasError = !(widget
+                                .formKey.currentState?.fields['payment_type']
+                                ?.validate() ??
+                            false);
+                      });
+                    },
+                    valueTransformer: (val) => val?.toString(),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 50),
-          // Row(
-          //   children: <Widget>[
-          //     Expanded(
-          //       child: ElevatedButton(
-          //         onPressed: () {
-          //           if (widget.formKey.currentState?.saveAndValidate() ??
-          //               false) {
-          //             debugPrint(widget.formKey.currentState?.value.toString());
-          //           } else {
-          //             debugPrint(widget.formKey.currentState?.value.toString());
-          //             debugPrint('validation failed');
-          //           }
-          //         },
-          //         child: const Text(
-          //           'Submit',
-          //           style: TextStyle(color: Colors.black),
-          //         ),
-          //       ),
-          //     ),
-          //     const SizedBox(width: 20),
-          //     Expanded(
-          //       child: OutlinedButton(
-          //         onPressed: () {
-          //           widget.formKey.currentState?.reset();
-          //         },
-          //         // color: Theme.of(context).colorScheme.secondary,
-          //         child: Text(
-          //           'Reset',
-          //           style: TextStyle(
-          //               color: Theme.of(context).colorScheme.secondary),
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );
