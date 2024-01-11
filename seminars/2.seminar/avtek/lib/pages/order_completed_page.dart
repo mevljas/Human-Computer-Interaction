@@ -284,9 +284,7 @@ class _OrderCompletedPageState extends State<OrderCompletedPage> {
                       ),
                       if (paymentType == 'Credit card') ...[
                         Text(
-                          widget.formKeys[5].currentState?.fields['number']
-                                  ?.value ??
-                              '',
+                          'xxxx-xxxx-xxxx-${(widget.formKeys[5].currentState?.fields['number']?.value ?? '').substring(12)}',
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         Text(
@@ -299,9 +297,7 @@ class _OrderCompletedPageState extends State<OrderCompletedPage> {
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         Text(
-                          widget.formKeys[5].currentState?.fields['ccv']
-                                  ?.value ??
-                              '',
+                          'xxx',
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ]

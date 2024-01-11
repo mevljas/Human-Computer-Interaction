@@ -250,7 +250,7 @@ class Summary extends StatelessWidget {
                 ),
                 if (paymentType == 'Credit card') ...[
                   Text(
-                    formKeys[5].currentState?.fields['number']?.value ?? '',
+                    'xxxx-xxxx-xxxx-${(formKeys[5].currentState?.fields['number']?.value ?? '').substring(12)}',
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
@@ -262,7 +262,7 @@ class Summary extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
-                    formKeys[5].currentState?.fields['ccv']?.value ?? '',
+                    'xxx',
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ]
