@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:avtek/pages/main_page.dart';
 import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,9 @@ class MenuBarWrapper extends StatelessWidget {
                             context: context,
                             applicationName: 'Avtek',
                             applicationVersion: '1.0.0',
+                            children: const <Widget>[
+                              Text('Author: Sebastjan Mevlja.'),
+                            ],
                             applicationIcon: Image.asset('assets/car.png',
                                 width: 50, height: 50),
                           );
@@ -68,26 +72,16 @@ class MenuBarWrapper extends StatelessWidget {
                     menuChildren: <Widget>[
                       MenuItemButton(
                         onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Magnify!'),
-                            ),
-                          );
+                          showOkAlertDialog(
+                              context: context,
+                              title: 'Instructions',
+                              message:
+                                  '1. Fill in the form\n2. Click on the next button\n3. Repeat until you reach the last page\n4. Click on the finish button');
                         },
-                        child: const MenuAcceleratorLabel('&Magnify'),
-                      ),
-                      MenuItemButton(
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Minify!'),
-                            ),
-                          );
-                        },
-                        child: const MenuAcceleratorLabel('Mi&nify'),
+                        child: const MenuAcceleratorLabel('&Instructions'),
                       ),
                     ],
-                    child: const MenuAcceleratorLabel('&Edit'),
+                    child: const MenuAcceleratorLabel('&Help'),
                   ),
                 ],
               ),
