@@ -39,6 +39,7 @@ dependencies:
   form_builder_validators: ^9.1.0
   intl: ^0.18.1
   adaptive_dialog: ^2.0.0
+  window_manager: ^0.3.7
 
 dev_dependencies:
   flutter_test:
