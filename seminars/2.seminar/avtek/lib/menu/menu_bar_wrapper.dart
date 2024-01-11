@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:avtek/pages/main_page.dart';
-import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 
 class MenuBarWrapper extends StatelessWidget {
@@ -52,14 +51,15 @@ class MenuBarWrapper extends StatelessWidget {
                       ),
                       MenuItemButton(
                         onPressed: () async {
-                          if (await confirm(
-                            context,
-                            title: const Text('Confirm'),
-                            content: const Text(
-                                'Would you like to exit the application?'),
-                            textOK: const Text('Yes'),
-                            textCancel: const Text('No'),
-                          )) {
+                          if (await showOkCancelAlertDialog(
+                                context: context,
+                                title: 'Confirm',
+                                message:
+                                    'Would you like to exit the application?',
+                                okLabel: 'Yes',
+                                cancelLabel: 'No',
+                              ) ==
+                              OkCancelResult.ok) {
                             exit(0);
                           }
                         },
