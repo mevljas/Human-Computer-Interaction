@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:avtek/pages/main_page.dart';
+import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 
 class MenuBarWrapper extends StatelessWidget {
@@ -44,12 +47,17 @@ class MenuBarWrapper extends StatelessWidget {
                         child: const MenuAcceleratorLabel('&Reset'),
                       ),
                       MenuItemButton(
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Quit!'),
-                            ),
-                          );
+                        onPressed: () async {
+                          if (await confirm(
+                            context,
+                            title: const Text('Confirm'),
+                            content: const Text(
+                                'Would you like to exit the application?'),
+                            textOK: const Text('Yes'),
+                            textCancel: const Text('No'),
+                          )) {
+                            exit(0);
+                          }
                         },
                         child: const MenuAcceleratorLabel('&Quit'),
                       ),
