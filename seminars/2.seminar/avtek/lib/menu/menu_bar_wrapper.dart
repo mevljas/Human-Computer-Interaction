@@ -1,3 +1,4 @@
+import 'package:avtek/pages/main_page.dart';
 import 'package:flutter/material.dart';
 
 class MenuBarWrapper extends StatelessWidget {
@@ -31,13 +32,16 @@ class MenuBarWrapper extends StatelessWidget {
                       ),
                       MenuItemButton(
                         onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Saved!'),
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MenuBarWrapper(
+                                child: MainPage(),
+                              ),
                             ),
                           );
                         },
-                        child: const MenuAcceleratorLabel('&Save'),
+                        child: const MenuAcceleratorLabel('&Reset'),
                       ),
                       MenuItemButton(
                         onPressed: () {

@@ -1,25 +1,30 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 
 class PartialSummary extends StatelessWidget {
-  PartialSummary({super.key, required this.formKeys});
+  const PartialSummary({super.key, required this.formKeys});
 
   final List<GlobalKey<FormBuilderState>> formKeys;
 
-  Random random = Random();
+  static int? totalPrice;
+  static int? hours;
+
+  static const pricePerHour = 3;
 
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('dd/MM/yyyy hh:mm');
-    final pricePerHour = random.nextInt(20) + 5;
 
     final pickupTime = formKeys[0].currentState?.fields['pickup_time']?.value ??
         DateTime.now();
     final returnTime = formKeys[0].currentState?.fields['return_time']?.value ??
         DateTime.now();
+
+    hours =
+        ((returnTime as DateTime).difference((pickupTime as DateTime))).inHours;
+
+    totalPrice = hours! * pricePerHour;
 
     return Column(
       children: [
@@ -46,15 +51,23 @@ class PartialSummary extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
+                  'Transmission type',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  'Engine type',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
                   'Car',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  'Price per day',
+                  'Price per hour',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  'Total price',
+                  'Sum',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
@@ -77,11 +90,23 @@ class PartialSummary extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  dateFormat.format((pickupTime ?? DateTime.now()) as DateTime),
+                  dateFormat.format(pickupTime),
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  dateFormat.format((returnTime ?? DateTime.now()) as DateTime),
+                  dateFormat.format(returnTime),
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  formKeys[1]
+                          .currentState
+                          ?.fields['transmission_type']
+                          ?.value ??
+                      '',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  formKeys[1].currentState?.fields['engine_type']?.value ?? '',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
@@ -93,7 +118,7 @@ class PartialSummary extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '${((returnTime as DateTime).difference((pickupTime as DateTime))).inHours * pricePerHour} €',
+                  '$totalPrice €',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],

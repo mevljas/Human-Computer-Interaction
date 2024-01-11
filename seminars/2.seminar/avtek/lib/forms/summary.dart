@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:avtek/forms/partial_summary.dart';
+import 'package:avtek/forms/payment_type_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +17,6 @@ class Summary extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('dd/MM/yyyy hh:mm');
     final creditCardDateFormat = DateFormat('MM/yyyy');
-    final pricePerHour = random.nextInt(20) + 5;
 
     final pickupTime = formKeys[0].currentState?.fields['pickup_time']?.value ??
         DateTime.now();
@@ -34,6 +35,10 @@ class Summary extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
+                  'General info',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text(
                   'Pickup location',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -49,6 +54,21 @@ class Summary extends StatelessWidget {
                   'Drop off time',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Car info',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text(
+                  'Transmission type',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  'Engine type',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 Text(
                   'Car',
                   style: Theme.of(context).textTheme.titleMedium,
@@ -56,6 +76,48 @@ class Summary extends StatelessWidget {
                 Text(
                   'Price per day',
                   style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Customer info',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text(
+                  'Customer',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  'Address',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  'Email',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  'Phone',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  'Age',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  'Had license for',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  'Insurance',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Payment',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
                   'Total price',
@@ -85,6 +147,7 @@ class Summary extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text('', style: Theme.of(context).textTheme.titleLarge),
                 Text(
                   formKeys[0].currentState?.fields['pickup_location']?.value ??
                       '',
@@ -106,16 +169,79 @@ class Summary extends StatelessWidget {
                   dateFormat.format((returnTime ?? DateTime.now()) as DateTime),
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text('', style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  formKeys[1]
+                          .currentState
+                          ?.fields['transmission_type']
+                          ?.value ??
+                      '',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  formKeys[1].currentState?.fields['engine_type']?.value ?? '',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
                 Text(
                   formKeys[1].currentState?.fields['car']?.value ?? '',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '$pricePerHour €',
+                  '${PartialSummary.pricePerHour} €',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text('', style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  (formKeys[3].currentState?.fields['first_name']?.value ??
+                          '') +
+                      (formKeys[3].currentState?.fields['last_name']?.value ??
+                          ''),
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '${((returnTime as DateTime).difference((pickupTime as DateTime))).inHours * pricePerHour} €',
+                  formKeys[3].currentState?.fields['address']?.value ?? '',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  formKeys[3].currentState?.fields['email']?.value ?? '',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  formKeys[3].currentState?.fields['phone']?.value ?? '',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  formKeys[3].currentState?.fields['age']?.value ?? '',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  (formKeys[3].currentState?.fields['license_age']?.value ??
+                          '') +
+                      ' years',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  (formKeys[3]
+                              .currentState
+                              ?.fields['accept_insurance']
+                              ?.value ??
+                          false)
+                      ? '✅'
+                      : '❌',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text('', style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  '${PaymentTypeForm.finalPrice} €',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(

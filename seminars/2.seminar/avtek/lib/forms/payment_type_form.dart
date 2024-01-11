@@ -1,11 +1,18 @@
+import 'package:avtek/forms/partial_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class PaymentTypeForm extends StatefulWidget {
-  const PaymentTypeForm({Key? key, required this.formKey}) : super(key: key);
+  const PaymentTypeForm(
+      {Key? key, required this.formKey, required this.formKeys})
+      : super(key: key);
 
   final GlobalKey<FormBuilderState> formKey;
+
+  static int? finalPrice;
+
+  final List<GlobalKey<FormBuilderState>> formKeys;
 
   @override
   State<PaymentTypeForm> createState() {
@@ -14,9 +21,6 @@ class PaymentTypeForm extends StatefulWidget {
 }
 
 class _PaymentTypeFormState extends State<PaymentTypeForm> {
-  bool autoValidate = true;
-  bool readOnly = false;
-  bool showSegmentedControl = true;
   bool _paymentTypeHasError = false;
 
   var paymentTypeOptions = ['Cash', 'Credit card'];
@@ -25,6 +29,15 @@ class _PaymentTypeFormState extends State<PaymentTypeForm> {
 
   @override
   Widget build(BuildContext context) {
+    final bool CarInsurance =
+        widget.formKeys[3].currentState?.fields['accept_insurance']?.value ??
+            false;
+
+    PaymentTypeForm.finalPrice = CarInsurance
+        ? (PartialSummary.totalPrice! +
+            (PartialSummary.hours! / 24 * 2).toInt())
+        : PartialSummary.totalPrice;
+
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -45,7 +58,7 @@ class _PaymentTypeFormState extends State<PaymentTypeForm> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Price',
+                          'Total price',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ],
@@ -55,7 +68,7 @@ class _PaymentTypeFormState extends State<PaymentTypeForm> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '1122€',
+                          '${PaymentTypeForm.finalPrice} €',
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ],

@@ -247,7 +247,7 @@ class _CustomerFormState extends State<CustomerForm> {
                     text: const TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Would you like car insurance?',
+                          text: 'Would you like car insurance for 2€/day ?',
                           style: TextStyle(color: Colors.black),
                         ),
                       ],

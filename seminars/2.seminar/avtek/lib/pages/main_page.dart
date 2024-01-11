@@ -70,8 +70,8 @@ class _MainPageState extends State<MainPage> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const MenuBarWrapper(
-                          child: OrderCompletedPage(),
+                        builder: (context) => MenuBarWrapper(
+                          child: OrderCompletedPage(formKeys: formKeys),
                         ),
                       ),
                     );
@@ -157,7 +157,7 @@ class _MainPageState extends State<MainPage> {
         state: _getStepState(4),
         isActive: _currentStep == 4,
         title: const Text("Payment type"),
-        content: PaymentTypeForm(formKey: formKeys[4]),
+        content: PaymentTypeForm(formKey: formKeys[4], formKeys: formKeys),
       ),
       Step(
         state: _getStepState(5),
