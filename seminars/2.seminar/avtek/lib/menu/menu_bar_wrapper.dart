@@ -67,6 +67,7 @@ class _MenuBarWrapperState extends State<MenuBarWrapper> {
                     cancelLabel: 'No',
                   ) ==
                   OkCancelResult.ok) {
+                _shortcutsEntry?.dispose();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -121,7 +122,13 @@ class _MenuBarWrapperState extends State<MenuBarWrapper> {
     ];
 
     _shortcutsEntry?.dispose();
-    _shortcutsEntry = ShortcutRegistry.of(context).addAll(shortcuts(children));
+
+    try {
+      _shortcutsEntry =
+          ShortcutRegistry.of(context).addAll(shortcuts(children));
+    } catch (e) {
+      print(e);
+    }
 
     return Column(
       children: <Widget>[
