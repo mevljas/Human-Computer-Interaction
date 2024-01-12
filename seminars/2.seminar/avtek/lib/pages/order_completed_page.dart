@@ -216,7 +216,7 @@ class _OrderCompletedPageState extends State<OrderCompletedPage> {
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       Text(
-                        '${PartialSummary.pricePerHour} €',
+                        '${PartialSummary.pricePerDay} €',
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       const SizedBox(

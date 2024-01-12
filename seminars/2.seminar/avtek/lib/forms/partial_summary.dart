@@ -8,9 +8,9 @@ class PartialSummary extends StatelessWidget {
   final List<GlobalKey<FormBuilderState>> formKeys;
 
   static int? totalPrice;
-  static int? hours;
+  static int? days;
 
-  static const pricePerHour = 3;
+  static const pricePerDay = 40;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,10 @@ class PartialSummary extends StatelessWidget {
     final returnTime = formKeys[0].currentState?.fields['return_time']?.value ??
         DateTime.now();
 
-    hours =
-        ((returnTime as DateTime).difference((pickupTime as DateTime))).inHours;
+    days =
+        ((returnTime as DateTime).difference((pickupTime as DateTime))).inDays;
 
-    totalPrice = hours! * pricePerHour;
+    totalPrice = days! * pricePerDay;
 
     return Column(
       children: [
@@ -63,7 +63,7 @@ class PartialSummary extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  'Price per hour',
+                  'Price per day',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
@@ -114,7 +114,7 @@ class PartialSummary extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '$pricePerHour €',
+                  '$pricePerDay €',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(

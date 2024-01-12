@@ -190,7 +190,7 @@ class Summary extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '${PartialSummary.pricePerHour} €',
+                  '${PartialSummary.pricePerDay} €',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(

@@ -34,8 +34,7 @@ class _PaymentTypeFormState extends State<PaymentTypeForm> {
             false;
 
     PaymentTypeForm.finalPrice = carInsurance
-        ? (PartialSummary.totalPrice! +
-            (PartialSummary.hours! / 24 * 2).toInt())
+        ? (PartialSummary.totalPrice! + (PartialSummary.days! * 2).toInt())
         : PartialSummary.totalPrice;
 
     return SingleChildScrollView(
