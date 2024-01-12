@@ -65,7 +65,7 @@ class _GeneralFormState extends State<GeneralForm> {
                     initialDate: DateTime.now(),
                     firstDate: DateTime.now(),
                     lastDate: DateTime(2025, 1, 1),
-                    format: DateFormat('dd/MM/yyyy hh:mm'),
+                    format: DateFormat('dd/MM/yyyy HH:mm'),
                     inputType: InputType.both,
                     decoration: InputDecoration(
                       labelText: 'Pickup Time',
@@ -105,7 +105,7 @@ class _GeneralFormState extends State<GeneralForm> {
                     initialDate: firstReturnTime,
                     firstDate: firstReturnTime,
                     lastDate: DateTime(2025, 1, 1),
-                    format: DateFormat('dd/MM/yyyy hh:mm'),
+                    format: DateFormat('dd/MM/yyyy HH:mm'),
                     inputType: InputType.both,
                     decoration: InputDecoration(
                       labelText: 'Return Time',

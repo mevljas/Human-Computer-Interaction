@@ -19,7 +19,7 @@ class OrderCompletedPage extends StatefulWidget {
 class _OrderCompletedPageState extends State<OrderCompletedPage> {
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('dd/MM/yyyy hh:mm');
+    final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
     final creditCardDateFormat = DateFormat('MM/yyyy');
 
     final pickupTime =

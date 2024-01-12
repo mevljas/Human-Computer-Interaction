@@ -15,7 +15,7 @@ class Summary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('dd/MM/yyyy hh:mm');
+    final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
     final creditCardDateFormat = DateFormat('MM/yyyy');
 
     final pickupTime = formKeys[0].currentState?.fields['pickup_time']?.value ??

@@ -14,7 +14,7 @@ class PartialSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('dd/MM/yyyy hh:mm');
+    final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
 
     final pickupTime = formKeys[0].currentState?.fields['pickup_time']?.value ??
         DateTime.now();
@@ -34,10 +34,6 @@ class PartialSummary extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Partial summary',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
                 Text(
                   'Pickup location',
                   style: Theme.of(context).textTheme.titleMedium,
@@ -80,10 +76,6 @@ class PartialSummary extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
                 Text(
                   formKeys[0].currentState?.fields['pickup_location']?.value ??
                       '',
