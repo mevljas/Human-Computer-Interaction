@@ -10,7 +10,7 @@ class CarForm extends StatefulWidget {
     return _CarFormState();
   }
 
-  final formKey;
+  final GlobalKey<FormBuilderState> formKey;
 }
 
 class _CarFormState extends State<CarForm> {
@@ -72,6 +72,8 @@ class _CarFormState extends State<CarForm> {
     'Diesel',
   ];
 
+  List<String> filteredCars = [];
+
   void _onChanged(dynamic val) => debugPrint(val.toString());
 
   @override
@@ -87,171 +89,146 @@ class _CarFormState extends State<CarForm> {
               debugPrint(widget.formKey.currentState!.value.toString());
             },
             autovalidateMode: AutovalidateMode.disabled,
-            initialValue: const {
-              'movie_rating': 5,
-              'best_language': 'Dart',
-              'age': '13',
-              'gender': 'Male',
-              'languages_filter': ['Dart']
-            },
             skipDisabled: true,
-            child: Column(
-              children: <Widget>[
-                FormBuilderDropdown<String>(
-                  name: 'car_size',
-                  decoration: InputDecoration(
-                    labelText: 'Car size',
-                    suffix: _carSizeHasError
-                        ? const Icon(Icons.error)
-                        : const Icon(Icons.check),
-                    hintText: 'Select your preferred car size',
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 500.0),
+              child: Column(
+                children: <Widget>[
+                  FormBuilderDropdown<String>(
+                    name: 'car_size',
+                    decoration: InputDecoration(
+                      labelText: 'Car size',
+                      suffix: _carSizeHasError
+                          ? const Icon(Icons.error)
+                          : const Icon(Icons.check),
+                      hintText: 'Select your preferred car size',
+                    ),
+                    validator: FormBuilderValidators.compose(
+                        [FormBuilderValidators.required()]),
+                    items: carSizes
+                        .map((location) => DropdownMenuItem(
+                              alignment: AlignmentDirectional.center,
+                              value: location,
+                              child: Text(location),
+                            ))
+                        .toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        _carSizeHasError = !(widget
+                                .formKey.currentState?.fields['car_size']
+                                ?.validate() ??
+                            false);
+                        if (!_carSizeHasError) {
+                          widget.formKey.currentState?.fields['car']?.reset();
+                          if (val == 'Small') {
+                            filteredCars.clear();
+                            filteredCars.addAll(smallCars);
+                          } else if (val == 'Medium') {
+                            filteredCars.clear();
+                            filteredCars.addAll(mediumCars);
+                          } else if (val == 'Large') {
+                            filteredCars.clear();
+                            filteredCars.addAll(bigCars);
+                          }
+                        }
+                      });
+                    },
+                    valueTransformer: (val) => val?.toString(),
                   ),
-                  validator: FormBuilderValidators.compose(
-                      [FormBuilderValidators.required()]),
-                  items: carSizes
-                      .map((location) => DropdownMenuItem(
-                            alignment: AlignmentDirectional.center,
-                            value: location,
-                            child: Text(location),
-                          ))
-                      .toList(),
-                  onChanged: (val) {
-                    setState(() {
-                      _carSizeHasError = !(widget
-                              .formKey.currentState?.fields['car_size']
-                              ?.validate() ??
-                          false);
-                    });
-                  },
-                  valueTransformer: (val) => val?.toString(),
-                ),
-                const SizedBox(height: 20),
-                FormBuilderDropdown<String>(
-                  name: 'transmission_type',
-                  decoration: InputDecoration(
-                    labelText: 'Transmission type',
-                    suffix: _transmissionTypeHasError
-                        ? const Icon(Icons.error)
-                        : const Icon(Icons.check),
-                    hintText: 'Select your preferred transmission type',
+                  const SizedBox(height: 20),
+                  FormBuilderDropdown<String>(
+                    name: 'transmission_type',
+                    decoration: InputDecoration(
+                      labelText: 'Transmission type',
+                      suffix: _transmissionTypeHasError
+                          ? const Icon(Icons.error)
+                          : const Icon(Icons.check),
+                      hintText: 'Select your preferred transmission type',
+                    ),
+                    validator: FormBuilderValidators.compose(
+                        [FormBuilderValidators.required()]),
+                    items: transmissionTypes
+                        .map((location) => DropdownMenuItem(
+                              alignment: AlignmentDirectional.center,
+                              value: location,
+                              child: Text(location),
+                            ))
+                        .toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        _transmissionTypeHasError = !(widget.formKey
+                                .currentState?.fields['transmission_type']
+                                ?.validate() ??
+                            false);
+                      });
+                    },
+                    valueTransformer: (val) => val?.toString(),
                   ),
-                  validator: FormBuilderValidators.compose(
-                      [FormBuilderValidators.required()]),
-                  items: transmissionTypes
-                      .map((location) => DropdownMenuItem(
-                            alignment: AlignmentDirectional.center,
-                            value: location,
-                            child: Text(location),
-                          ))
-                      .toList(),
-                  onChanged: (val) {
-                    setState(() {
-                      _transmissionTypeHasError = !(widget
-                              .formKey.currentState?.fields['transmission_type']
-                              ?.validate() ??
-                          false);
-                    });
-                  },
-                  valueTransformer: (val) => val?.toString(),
-                ),
-                const SizedBox(height: 20),
-                FormBuilderDropdown<String>(
-                  name: 'engine_type',
-                  decoration: InputDecoration(
-                    labelText: 'Engine type',
-                    suffix: _engineTypeHasError
-                        ? const Icon(Icons.error)
-                        : const Icon(Icons.check),
-                    hintText: 'Select your preferred engine type',
+                  const SizedBox(height: 20),
+                  FormBuilderDropdown<String>(
+                    name: 'engine_type',
+                    decoration: InputDecoration(
+                      labelText: 'Engine type',
+                      suffix: _engineTypeHasError
+                          ? const Icon(Icons.error)
+                          : const Icon(Icons.check),
+                      hintText: 'Select your preferred engine type',
+                    ),
+                    validator: FormBuilderValidators.compose(
+                        [FormBuilderValidators.required()]),
+                    items: engineTypes
+                        .map((location) => DropdownMenuItem(
+                              alignment: AlignmentDirectional.center,
+                              value: location,
+                              child: Text(location),
+                            ))
+                        .toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        _engineTypeHasError = !(widget
+                                .formKey.currentState?.fields['engine_type']
+                                ?.validate() ??
+                            false);
+                      });
+                    },
+                    valueTransformer: (val) => val?.toString(),
                   ),
-                  validator: FormBuilderValidators.compose(
-                      [FormBuilderValidators.required()]),
-                  items: engineTypes
-                      .map((location) => DropdownMenuItem(
-                            alignment: AlignmentDirectional.center,
-                            value: location,
-                            child: Text(location),
-                          ))
-                      .toList(),
-                  onChanged: (val) {
-                    setState(() {
-                      _engineTypeHasError = !(widget
-                              .formKey.currentState?.fields['engine_type']
-                              ?.validate() ??
-                          false);
-                    });
-                  },
-                  valueTransformer: (val) => val?.toString(),
-                ),
-                const SizedBox(height: 20),
-                FormBuilderDropdown<String>(
-                  name: 'car',
-                  decoration: InputDecoration(
-                    labelText: 'Car size',
-                    suffix: _carHasError
-                        ? const Icon(Icons.error)
-                        : const Icon(Icons.check),
-                    hintText: 'Select your preferred car',
+                  const SizedBox(height: 20),
+                  FormBuilderDropdown<String>(
+                    name: 'car',
+                    decoration: InputDecoration(
+                      labelText: 'Car model',
+                      suffix: _carHasError
+                          ? const Icon(Icons.error)
+                          : const Icon(Icons.check),
+                      hintText: 'Select your preferred car',
+                    ),
+                    validator: FormBuilderValidators.compose(
+                        [FormBuilderValidators.required()]),
+                    items: filteredCars
+                        .map((car) => DropdownMenuItem(
+                              alignment: AlignmentDirectional.center,
+                              value: car,
+                              child: Text(car),
+                            ))
+                        .toList(),
+                    onChanged: (val) {
+                      final field = widget.formKey.currentState?.fields['car'];
+                      if (val != null &&
+                          (field?.hasInteractedByUser ?? false)) {
+                        setState(() {
+                          _carHasError = !(field?.validate() ?? false);
+                        });
+                      }
+                    },
+                    valueTransformer: (val) => val?.toString(),
                   ),
-                  validator: FormBuilderValidators.compose(
-                      [FormBuilderValidators.required()]),
-                  items: mediumCars
-                      .map((location) => DropdownMenuItem(
-                            alignment: AlignmentDirectional.center,
-                            value: location,
-                            child: Text(location),
-                          ))
-                      .toList(),
-                  onChanged: (val) {
-                    setState(() {
-                      _carHasError = !(widget
-                              .formKey.currentState?.fields['car']
-                              ?.validate() ??
-                          false);
-                    });
-                  },
-                  valueTransformer: (val) => val?.toString(),
-                ),
-                const SizedBox(height: 20),
-              ],
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 50),
-          // Row(
-          //   children: <Widget>[
-          //     Expanded(
-          //       child: ElevatedButton(
-          //         onPressed: () {
-          //           if (widget.formKey.currentState?.saveAndValidate() ??
-          //               false) {
-          //             debugPrint(widget.formKey.currentState?.value.toString());
-          //           } else {
-          //             debugPrint(widget.formKey.currentState?.value.toString());
-          //             debugPrint('validation failed');
-          //           }
-          //         },
-          //         child: const Text(
-          //           'Submit',
-          //           style: TextStyle(color: Colors.black),
-          //         ),
-          //       ),
-          //     ),
-          //     const SizedBox(width: 20),
-          //     Expanded(
-          //       child: OutlinedButton(
-          //         onPressed: () {
-          //           widget.formKey.currentState?.reset();
-          //         },
-          //         // color: Theme.of(context).colorScheme.secondary,
-          //         child: Text(
-          //           'Reset',
-          //           style: TextStyle(
-          //               color: Theme.of(context).colorScheme.secondary),
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );

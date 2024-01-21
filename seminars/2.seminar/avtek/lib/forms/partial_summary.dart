@@ -1,13 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 
 class PartialSummary extends StatelessWidget {
-  const PartialSummary({super.key});
+  const PartialSummary({super.key, required this.formKeys});
+
+  final List<GlobalKey<FormBuilderState>> formKeys;
+
+  static int? totalPrice;
+  static int? days;
+
+  static const pricePerDay = 40;
 
   @override
   Widget build(BuildContext context) {
+    final dateFormat = DateFormat('dd/MM/yyyy HH:mm');
+
+    final pickupTime = formKeys[0].currentState?.fields['pickup_time']?.value ??
+        DateTime.now();
+    final returnTime = formKeys[0].currentState?.fields['return_time']?.value ??
+        DateTime.now();
+
+    days =
+        ((returnTime as DateTime).difference((pickupTime as DateTime))).inDays;
+
+    totalPrice = days! * pricePerDay;
+
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,6 +51,14 @@ class PartialSummary extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
+                  'Transmission type',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  'Engine type',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
                   'Car',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -37,7 +67,7 @@ class PartialSummary extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  'Total price',
+                  'Sum',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
@@ -47,31 +77,48 @@ class PartialSummary extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Ljubljana',
+                  formKeys[0].currentState?.fields['pickup_location']?.value ??
+                      '',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  'Maribor',
+                  formKeys[0]
+                          .currentState
+                          ?.fields['drop_off_location']
+                          ?.value ??
+                      '',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '12:00',
+                  dateFormat.format(pickupTime),
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '14:00',
+                  dateFormat.format(returnTime),
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  'BMW',
+                  formKeys[1]
+                          .currentState
+                          ?.fields['transmission_type']
+                          ?.value ??
+                      '',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '50€',
+                  formKeys[1].currentState?.fields['engine_type']?.value ?? '',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  '100€',
+                  formKeys[1].currentState?.fields['car']?.value ?? '',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  '$pricePerDay €',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  '$totalPrice €',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
